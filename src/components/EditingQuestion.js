@@ -1,32 +1,75 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export default class EditingQuestion extends Component {
-    state = {
-        question: this.props.question,
+  state = {
+    card: {
+      question: this.props.question,
+      answer: this.props.answer,
+      id: this.props.id
+    },
+    i: this.props.i,
+    questionInput: "",
+    answerInput: "",
+    iInput: "",
+    focused: false
+  };
+  onQuestionInputChange = e => {
+    this.setState({
+      card: {
+        question: e.target.value,
         answer: this.props.answer,
-        i: this.props.i,
-        questionInput: '',
-        answerInput: '',
-        iInput: ''
-    }
-    onQuestionInputChange = e => {
-        this.setState({
-            question: e.target.value
-        })
-    }
-    onAnswerInputChange = e => {
-        this.setState({
-            answer: e.target.value
-        })
-    }
+        id: this.props.id
+      }
+    });
+  };
+  onAnswerInputChange = e => {
+    this.setState({
+      card: {
+        question: this.props.question,
+        answer: e.target.value,
+        id: this.props.id
+      }
+    });
+  };
+  onBlur = e => {
+    console.log(this.state);
+    this.setState({
+      focused: false
+    });
+  };
+  onFocus = e => {
+    this.setState({
+      focused: true
+    });
+  };
+  handleEditClick = () => {
+    this.props.onEditSubmit(this.state.card);
+    this.onBlur();
+  };
+
   render() {
-    const { question, answer, i } = this.state
+    const { question, answer, i } = this.state.card;
     return (
       <div className="small-title">
-        <h1 className="tiny-title">Editing Question no.{i}</h1>
-        <input onChange={this.onQuestionInputChange} type="text" value={question}></input>
-        <textarea onChange={this.onAnswerInputChange} type="text" value={answer} />
+        <div className="small-title">
+          <input
+            onFocus={this.onFocus}
+            onBlur={this.handleEditClick}
+            value={question}
+            onChange={this.onQuestionInputChange}
+            className="tiny-title"
+          />
+          <textarea
+            onFocus={this.onFocus}
+            onBlur={this.handleEditClick}
+            value={answer}
+            onChange={this.onAnswerInputChange}
+            className="tiny-text"
+            name="text"
+            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
+          />
+        </div>
       </div>
-    )
+    );
   }
 }

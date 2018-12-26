@@ -5,7 +5,8 @@ import EditingQuestion from "./EditingQuestion";
 export default class QuestionList extends Component {
   state = {
     cardsInOrder: this.props.cardsInOrder,
-    editing: false
+    editing: false,
+    input:''
   };
   onEditClick = e => {
     this.setState(prevState => ({
@@ -13,24 +14,30 @@ export default class QuestionList extends Component {
     }));
   };
   render() {
-    const cardsInOrder = this.state.cardsInOrder;
+    console.log(this.state.input);
+    const cardsInOrder = this.props.cardsInOrder;
     return (
       <div className="cards">
         {this.state.editing ? (
           <div>
-            <button onClick={this.onEditClick} class="btn--dark btn--long">
+            <button onClick={this.onEditClick} className="btn--dark btn--long">
               Cancel
             </button>
-            <button className="btn--dark btn--long">Submit</button>
-            {cardsInOrder.map(({ question, answer, i }) => {
+            {cardsInOrder.map(({ question, answer, i, id }) => {
               return (
-                <EditingQuestion question={question} answer={answer} i={i} />
+                <EditingQuestion 
+                question={question} 
+                answer={answer} 
+                i={i} 
+                id={id}
+                onEditSubmit={this.props.onEditSubmit}
+                />
               );
             })}
           </div>
         ) : (
           <div>
-            <button onClick={this.onEditClick} class="btn--dark btn--long">
+            <button onClick={this.onEditClick} className="btn--dark btn--long">
               Edit
             </button>
             {cardsInOrder

@@ -120,6 +120,22 @@ export default class Dashboard extends Component {
       darkMode: !prevState.darkMode
     }));
   };
+  onEditSubmit = ({question, answer, id}) => {
+    console.log(question, answer, id)
+    this.setState({
+      cards : this.state.cards.map((card) => {
+        console.log(card)
+        if (id === card.id) {
+          return Object.assign({}, card, {
+            question,
+            answer,
+            id
+          })
+        } else {
+          return card
+        }
+      })})
+  }
   render() {
     const cardsInOrder = this.state.cards;
     const cardsRandomOrder = this.state.cardsRandomOrder;
@@ -165,6 +181,7 @@ export default class Dashboard extends Component {
         {collapse && (
             <QuestionList
             cardsInOrder={cardsInOrder}
+            onEditSubmit={this.onEditSubmit}
             />
         )}
         <CurrentCard
