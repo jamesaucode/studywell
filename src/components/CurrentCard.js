@@ -9,6 +9,16 @@ export default class CurrentCard extends Component {
             show: !prevState.show
         }))
     }
+    handleKeyDown = (e) => {
+      switch (e.keyCode) {
+        case 32:
+        console.log('Show answer!')
+        this.onShowClick(e)
+      }
+    }
+    componentDidMount = () => {
+      document.addEventListener("keydown", this.handleKeyDown, false);
+    }
   render() {
       const {question, answer, style, qnum} = this.props
     return (

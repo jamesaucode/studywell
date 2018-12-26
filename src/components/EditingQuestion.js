@@ -64,7 +64,7 @@ export default class EditingQuestion extends Component {
             onBlur={this.handleEditClick}
             value={answer}
             onChange={this.onAnswerInputChange}
-            className="tiny-text"
+            // className="tiny-text"
             name="text"
             oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
           />

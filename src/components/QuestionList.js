@@ -21,7 +21,7 @@ export default class QuestionList extends Component {
         {this.state.editing ? (
           <div>
             <button onClick={this.onEditClick} className="btn--dark btn--long">
-              Cancel
+              Finish Editing
             </button>
             {cardsInOrder.map(({ question, answer, i, id }) => {
               return (
