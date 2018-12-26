@@ -6,6 +6,8 @@ Collaboration feature will be added soon! You will be able to join groups and wo
 
 ## Hotkeys:
   → : Next question
+  
   ← : Previous question
+  
   Space: Show / Hide current question
   
