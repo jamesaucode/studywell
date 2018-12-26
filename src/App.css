@@ -73,7 +73,8 @@ textarea {
 }
 
 .btns {
-    width: var(--card-width);
+    width: 100%;
+    max-width: var(--card-width);
     margin: 0 auto;
 }
 .cards {
@@ -129,7 +130,8 @@ textarea {
 }
 
 .big-card {
-    width: var(--card-width);
+    width: 100%;
+    max-width: var(--card-width);
     height: fit-content;
     margin: 0 auto;
 }
@@ -151,7 +153,7 @@ textarea {
     align-items: center;
     height: 100%;
     padding: 0.5em;
-    font-size: 1.5em;
+    font-size: 1.25em;
     color: rgb(236, 188, 255);
     background-color: rgb(84, 16, 110);
 }
