@@ -1,32 +1,164 @@
-.App {
-  text-align: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans';
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+:root {
+    --card-width: 500px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.dark-mode {
+    height: 100vh;
+    background-color: #303030;
+}
+.light-mode {
+    height: 100vh;
+    background-color: rgb(255, 255, 255);
+}
+.btn--dark {
+    background-color: rgb(66, 38, 66);
+    color: rgb(236, 188, 255);
+    padding: 0.5em;
+    border: none;
+}
+.btn--colorless {
+    background-color: white;
+    color: black;
+    padding: 0.5em;
+    border: none;
 }
 
-.App-link {
-  color: #61dafb;
+.btn--light {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.btn--long {
+    width: 100%;
+}
+
+.btn--right {
+    margin-right: 0;
+}
+
+.btn--big {
+    font-size: 1.25em;
+    font-weight: 400;
+    width: 50%;
+}
+
+.btns {
+    width: var(--card-width);
+    margin: 0 auto;
+}
+.cards {
+    display: flex;
+    color: white;
+    background-color: rgba(10, 117, 0, 0.5);
+    width: fit-content;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 2em auto;
+}
+
+.small-title {
+    width: 500px;
+    margin:0.5em 0 ;
+    color: rgb(95, 255, 80);
+}
+
+.tiny-title {
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+.tiny-text {
+    font-style: oblique;
+    font-weight: 400;
+}
+
+.cards--dark {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card--dark {
+    background-color: white;
+    width: 150px;
+    margin: 0 1em;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+}
+
+.card--light {
+    background-color: rgb(46, 46, 46);
+    color: white;
+    width: 150px;
+    margin: 0 1em;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+}
+
+.big-card {
+    width: var(--card-width);
+    height: fit-content;
+    margin: 0 auto;
+}
+
+.big-title {
+    font-size: 1.5em;
+}
+
+.current {
+    background-color: white;
+    width: 150px;
+    margin: 0 1em;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.15);
+}
+
+.question--dark {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0.5em;
+    font-size: 1.5em;
+    color: rgb(236, 188, 255);
+    background-color: rgb(84, 16, 110);
+}
+
+.answer--dark {
+    min-height: 200px;
+    padding: 0.5em;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: rgb(236, 188, 255);
+    background-color: rgb(84, 16, 110);
+}
+
+.question--light {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em;
+    height: 100%;
+    font-size: 1.5em;
+    color: rgb(84, 16, 110);
+    background-color: rgb(236, 188, 255);
+}
+
+.answer--light {
+    min-height: 200px;
+    padding: 0.5em;
+    height: 100%;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: rgb(84, 16, 110);
+    background-color: rgb(236, 188, 255);
 }
