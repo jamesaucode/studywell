@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/studywell/static/js/runtime~main.058bdd53.js"
   },
   {
-    "revision": "dab03d8c7172d62fb00b",
-    "url": "/studywell/static/js/main.dab03d8c.chunk.js"
+    "revision": "14b9005479e0d6380ebf",
+    "url": "/studywell/static/js/main.14b90054.chunk.js"
   },
   {
     "revision": "7f05d1586760739b3454",
     "url": "/studywell/static/js/1.7f05d158.chunk.js"
   },
   {
-    "revision": "dab03d8c7172d62fb00b",
-    "url": "/studywell/static/css/main.e9fb6a1a.chunk.css"
+    "revision": "14b9005479e0d6380ebf",
+    "url": "/studywell/static/css/main.3208270b.chunk.css"
   },
   {
-    "revision": "8441a99a189cddbfdb53e46e0a243b08",
+    "revision": "f6648949b34fb31f29f1ad00bc2feb85",
     "url": "/studywell/index.html"
   }
 ];
