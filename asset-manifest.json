@@ -1,13 +1,13 @@
 {
-  "main.css": "/studywell/static/css/main.b5142391.chunk.css",
-  "main.js": "/studywell/static/js/main.f9c86428.chunk.js",
-  "main.js.map": "/studywell/static/js/main.f9c86428.chunk.js.map",
-  "static/js/1.5db1da23.chunk.js": "/studywell/static/js/1.5db1da23.chunk.js",
-  "static/js/1.5db1da23.chunk.js.map": "/studywell/static/js/1.5db1da23.chunk.js.map",
+  "main.css": "/studywell/static/css/main.e9fb6a1a.chunk.css",
+  "main.js": "/studywell/static/js/main.b50701c3.chunk.js",
+  "main.js.map": "/studywell/static/js/main.b50701c3.chunk.js.map",
+  "static/js/1.7f05d158.chunk.js": "/studywell/static/js/1.7f05d158.chunk.js",
+  "static/js/1.7f05d158.chunk.js.map": "/studywell/static/js/1.7f05d158.chunk.js.map",
   "runtime~main.js": "/studywell/static/js/runtime~main.058bdd53.js",
   "runtime~main.js.map": "/studywell/static/js/runtime~main.058bdd53.js.map",
-  "static/css/main.b5142391.chunk.css.map": "/studywell/static/css/main.b5142391.chunk.css.map",
+  "static/css/main.e9fb6a1a.chunk.css.map": "/studywell/static/css/main.e9fb6a1a.chunk.css.map",
   "index.html": "/studywell/index.html",
-  "precache-manifest.e12cd67e8d2e0b8b98ac18a35a378120.js": "/studywell/precache-manifest.e12cd67e8d2e0b8b98ac18a35a378120.js",
+  "precache-manifest.e065d515293d028b788676299e69819d.js": "/studywell/precache-manifest.e065d515293d028b788676299e69819d.js",
   "service-worker.js": "/studywell/service-worker.js"
 }
