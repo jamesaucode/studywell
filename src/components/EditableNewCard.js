@@ -38,8 +38,8 @@ export default class EditableNewCard extends Component {
   componentDidMount = () => {
     console.log('Editable new card mounted')
     this.setState({
-        questionInput: "New Question",
-        answerInput: "New Answer"
+        questionInput: "Type question here",
+        answerInput: "Type answer here"
     })
     // document.addEventListener("keypress", this.handleKeyDown, false);
   };

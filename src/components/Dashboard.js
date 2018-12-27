@@ -3,6 +3,7 @@ import Card from "./Card";
 import uuid from "uuid";
 import axios from "axios";
 import Button from "./Button";
+import Slide from './Slide';
 import EditableNewCard from "./EditableNewCard";
 import CurrentCard from "./CurrentCard";
 import QuestionList from "./QuestionList";
@@ -45,7 +46,6 @@ export default class Dashboard extends Component {
         id: uuid()
       }
     ],
-    current: {},
     darkMode: true,
     leftBtnClicked: false,
     rightBtnClicked: false,
@@ -53,6 +53,8 @@ export default class Dashboard extends Component {
     playing: false,
     newCard: false,
     dim: false,
+    testing: false,
+    correct: 0,
     qnum: 0
   };
   // onDrawClick = e => {
@@ -136,12 +138,6 @@ export default class Dashboard extends Component {
     });
   };
   onAddQuestionClick = e => {
-    // this.state.cards.push({
-    //   question: "Edit me",
-    //   answer: "Edit me",
-    //   id: uuid(),
-    //   i: this.state.cards.length + 1
-    // });
     this.setState({
       newCard: true
     });
@@ -204,6 +200,21 @@ export default class Dashboard extends Component {
       dim: !prevState.dim
     }));
   };
+  onTestModeClickTrue = e => {
+    this.setState({
+      testing: true
+    })
+  }
+  onTestModeClickFalse = e => {
+    this.setState({
+      testing: false
+    })
+  }
+  onCorrectAnswerClick = e => {
+    this.setState(prevState => ({
+      correct: prevState.correct + 1
+    }))
+  }
   // componentDidMount = () => {
   //   document.addEventListener("keydown", this.handleKeyDown, false);
   // };
@@ -240,7 +251,7 @@ export default class Dashboard extends Component {
   render() {
     const cardsInOrder = this.state.cards;
     const cardsRandomOrder = this.state.cardsRandomOrder;
-    const { collapse, qnum, darkMode, playing, newCard } = this.state;
+    const { collapse, qnum, darkMode, playing, newCard, correct } = this.state;
     var darkModeString = "dark-mode";
     var style = {};
     if (!darkMode) {
@@ -326,6 +337,11 @@ export default class Dashboard extends Component {
               answer={this.state.cards[qnum].answer}
               style={style.card}
               qnum={qnum}
+              testing={this.state.testing}
+              onTestModeClickFalse={this.onTestModeClickFalse}
+              onTestModeClickTrue={this.onTestModeClickTrue}
+              onCorrectAnswerClick={this.onCorrectAnswerClick}
+              onNextQuestionClick={this.onNextQuestionClick}
             />
             <div className="btns">
               <Button
@@ -343,11 +359,12 @@ export default class Dashboard extends Component {
             </div>
           </div>
         )}
-        {playing && (
+        {/* {playing && (
           <div className="answer-input-wrapper">
             <textarea className="answer-input" />
           </div>
-        )}
+        )} */}
+        {playing && <Slide correct={correct} length={this.state.cards.length} />}
       </div>
     );
   }
