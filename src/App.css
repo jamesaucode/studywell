@@ -8,10 +8,8 @@
 input {
     padding: 0;
     border: 0;
-    margin-bottom: 0.5em;
     background-color: rgb(201,201,201);
     color: black;
-    text-align: center;
 }
 
 textarea {
@@ -30,6 +28,16 @@ textarea {
     --card-width: 500px;
 }
 
+.answer-input-wrapper {
+    width: fit-content;
+    margin: 1em auto;
+}
+
+.answer-input {
+    height: 100px;
+    width: var(--card-width);
+}
+
 .dark-mode {
     min-height: 100vh;
     background-color: #303030;
@@ -38,10 +46,30 @@ textarea {
     min-height: 100vh;
     background-color: rgb(255, 255, 255);
 }
+.btn--dark--last {
+    background-color: rgb(32, 62, 160);
+    color: rgb(236, 188, 255);
+    padding: 0.5em;
+    border: none;
+}
+.btn--dark--next {
+    background-color: rgb(28, 55, 146);
+    color: rgb(236, 188, 255);
+    padding: 0.5em;
+    border: none;
+}
+
 .btn--dark {
     background-color: rgb(66, 38, 66);
     color: rgb(236, 188, 255);
     padding: 0.5em;
+    border: none;
+}
+
+.btn--light {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
     border: none;
 }
 .btn--colorless {
@@ -51,7 +79,14 @@ textarea {
     border: none;
 }
 
-.btn--light {
+.btn--light--last {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
+}
+
+.btn--light--next {
     background-color: rgb(161, 161, 161);
     padding: 0.5em;
     color: black;
@@ -72,7 +107,22 @@ textarea {
     width: 50%;
 }
 
+.btn--top-right {
+    position: absolute;
+    padding: 0;
+    border: none;
+    height: fit-content;
+    top: -20px;
+    right: -20px;
+}
+
+.no-background-color {
+    background-color: rgb(84, 16, 110);
+}
+
 .btns {
+    display: flex;
+    flex-grow: 1;
     width: 100%;
     max-width: var(--card-width);
     margin: 0 auto;
@@ -88,6 +138,19 @@ textarea {
     flex-wrap: wrap;
     justify-content: center;
     margin: 2em auto;
+}
+
+.exit {
+
+}
+
+.dimmer {;
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    background: #000000;
+    position: fixed;
+    z-index: 100;
 }
 
 .small-title {
@@ -130,14 +193,19 @@ textarea {
 }
 
 .big-card {
+    position: relative;
     width: 100%;
     max-width: var(--card-width);
     height: fit-content;
     margin: 0 auto;
+    margin-top: 1em;
 }
 
 .big-title {
-    font-size: 1.5em;
+    font-weight: 700;
+    font-size: 1.25em;
+    color: inherit;
+    background-color: inherit;
 }
 
 .current {
@@ -160,11 +228,13 @@ textarea {
 
 .answer--dark {
     min-height: 200px;
+    width: 100%;
     padding: 0.5em;
-    font-size: 1.5em;
+    font-size: 1.25em;
+    line-height: 1.75em;
     font-weight: 400;
-    color: rgb(236, 188, 255);
-    background-color: rgb(84, 16, 110);
+    color: rgb(220, 136, 253);
+    background-color: rgba(84, 16, 110,1);
 }
 
 .question--light {
@@ -173,7 +243,7 @@ textarea {
     align-items: center;
     padding: 0.5em;
     height: 100%;
-    font-size: 1.5em;
+    font-size: 1.25em;
     color: rgb(84, 16, 110);
     background-color: rgb(236, 188, 255);
 }
@@ -182,7 +252,7 @@ textarea {
     min-height: 200px;
     padding: 0.5em;
     height: 100%;
-    font-size: 1.5em;
+    font-size: 1.25em;
     font-weight: 400;
     color: rgb(84, 16, 110);
     background-color: rgb(236, 188, 255);

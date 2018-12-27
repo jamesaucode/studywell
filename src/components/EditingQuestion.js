@@ -66,7 +66,6 @@ export default class EditingQuestion extends Component {
             onChange={this.onAnswerInputChange}
             // className="tiny-text"
             name="text"
-            oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'
           />
         </div>
       </div>
