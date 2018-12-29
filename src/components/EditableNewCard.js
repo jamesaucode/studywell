@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import uuid from 'uuid';
-import cancel from '../image/error.png'
+import cancel from '../image/cross.png'
 
 export default class EditableNewCard extends Component {
   state = {
@@ -25,6 +25,9 @@ export default class EditableNewCard extends Component {
       case 13:
         this.handleSubmit(e);
         break;
+      case 27:
+        this.props.onCancelClick()
+        break;
       default:
         break;
     }
@@ -32,16 +35,14 @@ export default class EditableNewCard extends Component {
   handleSubmit = e => {
     this.props.onSubmit(this.state.questionInput, this.state.answerInput, this.state.id);
   };
-  onAddButtonClick = e => {
-    console.log(e.keyCode + "DOWN!");
-  };
+  handleFocus = e => {
+    e.target.select()
+  }
   componentDidMount = () => {
     console.log('Editable new card mounted')
-    this.setState({
-        questionInput: "Type question here",
-        answerInput: "Type answer here"
-    })
-    // document.addEventListener("keypress", this.handleKeyDown, false);
+    
+    this.questionInput.focus();
+    this.questionInput.select();
   };
   
   render() {
@@ -53,22 +54,25 @@ export default class EditableNewCard extends Component {
       className={style.div + " big-card"}>
         <div className={style.question}>
           <input
+            ref={(input) => { this.questionInput = input;}}
             className="big-title"
             value={this.state.questionInput}
             onChange={this.onQuestionInputChange}
-            autoFocus
+            onFocus={this.handleFocus}
+            placeholder="Type question here"
           />
-          <button className="btn--dark btn--right" onClick={this.handleSubmit}>
+          <button className="btn--dark btn--right tiny-gutter-right" onClick={this.handleSubmit}>
             Add
           </button>
           <button className="btn--top-right" onClick={onCancelClick}>
-            <span className="no-background-color">X</span>
+            <img className="testing" src={cancel}></img>
           </button>
         </div>
         <input
           className={style.answer}
           value={this.state.answerInput}
           onChange={this.onAnswerInputChange}
+          placeholder="Type answer here"
         />
       </div>
     );

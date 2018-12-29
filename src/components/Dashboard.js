@@ -3,46 +3,31 @@ import Card from "./Card";
 import uuid from "uuid";
 import axios from "axios";
 import Button from "./Button";
-import Slide from './Slide';
+import Slide from "./Slide";
 import EditableNewCard from "./EditableNewCard";
 import CurrentCard from "./CurrentCard";
 import QuestionList from "./QuestionList";
+import SuccessMessage from "./SuccessMessage";
 
 export default class Dashboard extends Component {
   state = {
     cards: [
       {
-        question: "Pseudocode",
-        answer:
-          "a high-level description of the actions of a program or algorithm, using a mixture of English and informal programming language syntax",
+        question: "Your mom",
+        answer: "Fat",
         i: 1,
         id: uuid()
       },
       {
-        question: "Algorithm",
-        answer: "a step-by-step procedure for solving a problem",
+        question: "My mom",
+        answer: "Not fat",
         i: 2,
         id: uuid()
       },
       {
-        question: "Flowchart",
-        answer:
-          "a diagram that shows step-by-step progression through a procedure using connecting lines and a set of symbols",
+        question: "Kappa",
+        answer: "Poggers",
         i: 3,
-        id: uuid()
-      },
-      {
-        question:
-          "This is a very long question. Yes, I make this question long to see if it fits well into the container",
-        answer:
-          "provide a computer or other machine with coded instructions for the automatic performance of a particular task",
-        i: 4,
-        id: uuid()
-      },
-      {
-        question: "Your mom?",
-        answer: "Fat",
-        i: 5,
         id: uuid()
       }
     ],
@@ -54,19 +39,10 @@ export default class Dashboard extends Component {
     newCard: false,
     dim: false,
     testing: false,
+    success: false,
     correct: 0,
     qnum: 0
   };
-  // onDrawClick = e => {
-  //   const cards = this.state.cards;
-  //   const randomNumber = Math.floor(
-  //     Math.random(cards.length) * Math.floor(cards.length)
-  //   );
-  //   console.log(randomNumber);
-  //   this.setState({
-  //     current: cards[randomNumber]
-  //   });
-  // };
   handleShuffleClick = () => {
     this.onShuffleClick();
     this.setState({
@@ -74,7 +50,6 @@ export default class Dashboard extends Component {
     });
   };
   onShuffleClick = () => {
-    console.log("Everyday I am shuffling");
     var cards = this.state.cards;
     var j, x, i;
     for (i = cards.length - 1; i > 0; i--) {
@@ -83,9 +58,6 @@ export default class Dashboard extends Component {
       cards[i] = cards[j];
       cards[j] = x;
     }
-    this.setState({
-      cardsRandomOrder: cards
-    });
   };
   onCollapseClick = e => {
     this.setState(prevState => ({
@@ -121,10 +93,8 @@ export default class Dashboard extends Component {
     }));
   };
   onEditSubmit = ({ question, answer, id }) => {
-    console.log(question, answer, id);
     this.setState({
       cards: this.state.cards.map(card => {
-        console.log(card);
         if (id === card.id) {
           return Object.assign({}, card, {
             question,
@@ -144,7 +114,6 @@ export default class Dashboard extends Component {
   };
 
   onSubmit = (question, answer, id) => {
-    console.log("submitting:" + question + answer);
     const newCard = {
       question,
       answer,
@@ -152,7 +121,8 @@ export default class Dashboard extends Component {
       i: this.state.cards.length + 1
     };
     this.setState(prevState => ({
-      cards: prevState.cards.concat(newCard)
+      cards: prevState.cards.concat(newCard),
+      success: true
     }));
     this.onCancelClick();
   };
@@ -170,11 +140,9 @@ export default class Dashboard extends Component {
     if (this.state.playing) {
       switch (e.keyCode) {
         case 39:
-          console.log("Next meme");
           this.onNextQuestionClick(e);
           break;
         case 37:
-          console.log("Previous meme");
           this.onLastQuestionClick(e);
           break;
         default:
@@ -183,7 +151,6 @@ export default class Dashboard extends Component {
     }
     if (this.state.dim) {
       if (e.keyCode === 27) {
-        console.log("Escaping from dim mode");
         this.onDimClick(e);
       }
     }
@@ -192,8 +159,13 @@ export default class Dashboard extends Component {
     if (this.state.dim === true) {
       this.setState({
         dim: false
-      })
-    }  
+      });
+    }
+  };
+  onCloseSuccessMessageClick = e => {
+    this.setState({
+      success:false
+    })
   }
   onDimClick = e => {
     this.setState(prevState => ({
@@ -203,55 +175,42 @@ export default class Dashboard extends Component {
   onTestModeClickTrue = e => {
     this.setState({
       testing: true
-    })
-  }
+    });
+  };
   onTestModeClickFalse = e => {
     this.setState({
       testing: false
-    })
-  }
+    });
+  };
   onCorrectAnswerClick = e => {
     this.setState(prevState => ({
       correct: prevState.correct + 1
-    }))
+    }));
+  };
+  async testSubmit(e) {
+    e.preventDefault();
+    await axios
+      .post("http://localhost:8081/", {
+        question: e.target.value,
+        answer: "sajdkhask"
+      })
+      .catch(error => console.log(error));
   }
-  // componentDidMount = () => {
-  //   document.addEventListener("keydown", this.handleKeyDown, false);
-  // };
-  // async onTest () {
-  //   const cards = (await axios.get('http://localhost:8081')).data;
-  //   console.log(cards)
-  //   axios.post('http://localhost:8081', {
-  //     question: 'Edit me!',
-  //     answer: "hehe",
-  //     id: uuid(),
-  //     i: cards.length + 1
-  //   })
-  //   const newCards = (await axios.get('http://localhost:8081')).data;
-  //   this.setState({
-  //     cards: newCards
-  //   })
-  // }
-
-  // async componentDidMount() {
-  //   const cards = (await axios.get('http://localhost:8081/')).data;
-  //   document.addEventListener("keydown", this.handleKeyDown, false);
-  //   this.setState({
-  //     cards
-  //   })
-  // }
-
-  // async componentDidUpdate (prevProps, prevState) {
-  //   const cards = (await axios.get('http://localhost:8081')).data;
-  //   this.setState({
-  //     cards
-  //   })
-  // }
+  componentDidMount = () => {
+    console.log("Mounted!");
+  };
 
   render() {
     const cardsInOrder = this.state.cards;
-    const cardsRandomOrder = this.state.cardsRandomOrder;
-    const { collapse, qnum, darkMode, playing, newCard, correct } = this.state;
+    const {
+      collapse,
+      qnum,
+      darkMode,
+      playing,
+      newCard,
+      correct,
+      testing
+    } = this.state;
     var darkModeString = "dark-mode";
     var style = {};
     if (!darkMode) {
@@ -260,7 +219,6 @@ export default class Dashboard extends Component {
         btnL: "btn--light--last",
         btnN: "btn--light--next",
         btn: "btn--light",
-        // btnLong: "btn--long",
         cards: "cards--dark",
         card: {
           div: "card--light",
@@ -283,40 +241,61 @@ export default class Dashboard extends Component {
       };
     }
     return (
-      <div tabIndex="0" onKeyDown={this.onDimClickOff} className={darkModeString}>
-        {this.state.dim && <div className="dimmer"/>}
-        <button className={style.btn} onClick={this.onModeClick}>
-          Light mode / Dark mode
-        </button>
-        {collapse ? (
-          <button className={style.btn} onClick={this.onCollapseClick}>
-            Hide all questions
+      <div
+        tabIndex="0"
+        onKeyDown={this.onDimClickOff}
+        className={darkModeString}
+      >
+        {this.state.dim && <div className="dimmer" />}
+        <div>
+          <button className={style.btn} onClick={this.onModeClick}>
+            Light mode / Dark mode
           </button>
-        ) : (
-          <button className={style.btn} onClick={this.onCollapseClick}>
-            Show all questions
-          </button>
-        )}
-        {playing ? (
-          <button className={style.btn} onClick={this.onStartClick}>
-            Stop
-          </button>
-        ) : (
-          <button className={style.btn} onClick={this.onStartClick}>
-            Start
-          </button>
-        )}
+          {collapse ? (
+            <button className={style.btn} onClick={this.onCollapseClick}>
+              Hide all questions
+            </button>
+          ) : (
+            <button className={style.btn} onClick={this.onCollapseClick}>
+              Show all questions
+            </button>
+          )}
+          {playing ? (
+            <button className={style.btn} onClick={this.onStartClick}>
+              Stop
+            </button>
+          ) : (
+            <button className={style.btn} onClick={this.onStartClick}>
+              Start
+            </button>
+          )}
 
-        <button className={style.btn} onClick={this.handleShuffleClick}>
-          Shuffle
-        </button>
-        <button onClick={this.onAddQuestionClick} className={style.btn}>
-          Add Question
-        </button>
-        <button className={style.btn} onClick={this.onDimClick}>
-          Dim the light
-        </button>
-        {/* <button onClick={this.onTest}>Test</button> */}
+          <button className={style.btn} onClick={this.handleShuffleClick}>
+            Shuffle
+          </button>
+          <button onClick={this.onAddQuestionClick} className={style.btn}>
+            Add Question
+          </button>
+          <button className={style.btn} onClick={this.onDimClick}>
+            Show hotkey
+          </button>
+        </div>
+        {this.state.dim && 
+        <div className="hotkeys">
+            <h2>HOTKEYS!</h2>
+        </div>}
+        {/* Show success message when user answered all answer correctly */}
+        {correct === this.state.cards.length &&
+        <SuccessMessage
+        message="You answered all the questions correctly! Congratulations!"
+        onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
+        />}
+        {/* Show success message for new card  */}
+        {this.state.success && 
+        <SuccessMessage 
+        message="A new card is added!"
+        onCloseSuccessMessageClick={this.onCloseSuccessMessageClick} 
+        />}
         {newCard && (
           <EditableNewCard
             style={style.card}
@@ -331,13 +310,14 @@ export default class Dashboard extends Component {
           />
         )}
         {playing && (
-          <div tabIndex="0" onKeyDown={this.handleKeyDown}>
+          <div className="margin-auto-center"tabIndex="0" onKeyDown={this.handleKeyDown}>
             <CurrentCard
               question={this.state.cards[qnum].question}
               answer={this.state.cards[qnum].answer}
               style={style.card}
               qnum={qnum}
               testing={this.state.testing}
+              length={this.state.cards.length}
               onTestModeClickFalse={this.onTestModeClickFalse}
               onTestModeClickTrue={this.onTestModeClickTrue}
               onCorrectAnswerClick={this.onCorrectAnswerClick}
@@ -359,12 +339,9 @@ export default class Dashboard extends Component {
             </div>
           </div>
         )}
-        {/* {playing && (
-          <div className="answer-input-wrapper">
-            <textarea className="answer-input" />
-          </div>
-        )} */}
-        {playing && <Slide correct={correct} length={this.state.cards.length} />}
+        {playing && testing && (
+          <Slide correct={correct} length={this.state.cards.length} />
+        )}
       </div>
     );
   }

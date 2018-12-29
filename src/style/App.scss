@@ -1,10 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Open Sans";
-}
-
 input {
   padding: 0;
   border: 0;
@@ -19,7 +12,6 @@ textarea {
   font-style: normal;
   color: black;
   resize: none;
-  /* text-align: center; */
   height: 150px;
   width: 90%;
 }
@@ -28,14 +20,17 @@ textarea {
   --card-width: 500px;
 }
 
-.answer-input-wrapper {
-  width: fit-content;
-  margin: 1em auto;
-}
+$card-width: 500px;
 
+// Not sure what this is for ??
 .answer-input {
   height: 100px;
-  width: var(--card-width);
+  width: $card-width;
+
+  &-wrapper {
+    width: fit-content;
+    margin: 1em auto;
+  }
 }
 
 .dark-mode {
@@ -46,89 +41,138 @@ textarea {
   min-height: 100vh;
   background-color: rgb(255, 255, 255);
 }
-.btn--dark--last {
-  background-color: rgb(32, 62, 160);
-  color: rgb(236, 188, 255);
-  padding: 0.5em;
-  border: none;
-}
-.btn--dark--next {
-  background-color: rgb(28, 55, 146);
-  color: rgb(236, 188, 255);
-  padding: 0.5em;
-  border: none;
-}
 
-.btn--right {
-  margin-left: auto;
-}
+// buttons for dark mode
 
 .btn--dark {
   background-color: rgb(66, 38, 66);
   color: rgb(236, 188, 255);
   padding: 0.5em;
   border: none;
+
+  &--last {
+    background-color: rgb(32, 62, 160);
+    color: rgb(236, 188, 255);
+    padding: 0.5em;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+  }
+  &--next {
+    background-color: rgb(28, 55, 146);
+    color: rgb(236, 188, 255);
+    padding: 0.5em;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    background-color: rgb(88, 51, 88);
+    cursor: pointer;
+  }
 }
+
+// buttons for light mode
 
 .btn--light {
   background-color: rgb(161, 161, 161);
   padding: 0.5em;
   color: black;
   border: none;
-}
-.btn--colorless {
-  background-color: white;
-  color: black;
-  padding: 0.5em;
-  border: none;
+
+  &--last {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
+  }
+
+  &--next {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.btn--light--last {
-  background-color: rgb(161, 161, 161);
-  padding: 0.5em;
-  color: black;
-  border: none;
+// Other button stylings
+
+.btn {
+  &--colorless {
+    background-color: white;
+    color: black;
+    padding: 0.5em;
+    border: none;
+  }
+
+  &--big {
+    font-size: 1.25em;
+    font-weight: 400;
+    width: 50%;
+  }
+
+  // Place button on top right of a position relative element
+  &--top-right {
+    position: absolute;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    top: -15px;
+    right: -15px;
+  }
+
+  // green button for Yes button in testing mode
+  &--green {
+    border: 0;
+    height: 40px;
+    width: 25%;
+    font-size: 1em;
+    font-weight: 400;
+    color: rgb(170, 255, 170);
+    background-color: rgba(28, 139, 28, 0.7);
+  }
+  // red button for No button in testing mode
+  &--red {
+    border: 0;
+    height: 40px;
+    width: 25%;
+    font-size: 1em;
+    font-weight: 400;
+    color: rgb(255, 176, 176);
+    background-color: rgba(255, 0, 0, 0.7);
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
-.btn--light--next {
-  background-color: rgb(161, 161, 161);
-  padding: 0.5em;
-  color: black;
-  border: none;
-}
-
-.btn--long {
-  width: 100%;
-}
-
-.btn--right {
-  margin-right: 0;
-}
-
-.btn--big {
-  font-size: 1.25em;
-  font-weight: 400;
-  width: 50%;
-}
-
-.btn--top-right {
-  position: absolute;
-  padding: 0;
-  border: none;
-  height: fit-content;
-  top: -20px;
-  right: -20px;
+.testing {
+  background-color: transparent;
+  height: 32px;
+  width: 32px;
 }
 
 .no-background-color {
   background-color: rgb(84, 16, 110);
 }
 
+// The button wrapper for the Next and Previous button under CurrentCard
 .btns {
   display: flex;
   flex-grow: 1;
   width: 100%;
-  max-width: var(--card-width);
+  max-width: $card-width;
   margin: 0 auto;
 }
 
@@ -137,6 +181,7 @@ textarea {
   justify-content: center;
   margin: 0 auto;
 }
+
 .cards {
   display: flex;
   color: white;
@@ -150,9 +195,6 @@ textarea {
   margin: 2em auto;
 }
 
-.exit {
-}
-
 .dimmer {
   height: 100%;
   width: 100%;
@@ -160,6 +202,24 @@ textarea {
   background: #000000;
   position: fixed;
   z-index: 100;
+}
+
+.success {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em auto;
+  border-radius: 5px;
+  width: 95%;
+  text-align: center;
+  color: white;
+  background-color: #4bb543;
+  height: 50px;
+
+  &-message {
+    font-size: 1em;
+    font-weight: 400;
+  }
 }
 
 .small-title {
@@ -170,6 +230,7 @@ textarea {
 
 .tiny-title {
   font-weight: 500;
+  margin-bottom: 0.5em;
   font-size: 1.75em;
 }
 
@@ -177,7 +238,14 @@ textarea {
   font-style: oblique;
   font-weight: 400;
   line-height: 1.5em;
+  width: 80%;
+  margin: 1em auto;
+}
+
+.margin-auto-center {
   margin: 0 auto;
+  outline: none;
+  /* max-width: fit-content; */
 }
 
 .cards--dark {
@@ -186,25 +254,28 @@ textarea {
   justify-content: center;
 }
 
-.card--dark {
-  background-color: white;
-  width: 150px;
-  margin: 0 1em;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
-}
 
-.card--light {
-  background-color: rgb(46, 46, 46);
-  color: white;
-  width: 150px;
-  margin: 0 1em;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+.card {
+  &--dark {
+    background-color: white;
+    width: 150px;
+    margin: 0 1em;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &--light {
+    background-color: rgb(46, 46, 46);
+    color: white;
+    width: 150px;
+    margin: 0 1em;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .big-card {
   position: relative;
   width: 100%;
-  max-width: var(--card-width);
+  max-width: $card-width;
   height: fit-content;
   margin: 0 auto;
 }
@@ -214,33 +285,6 @@ textarea {
   font-size: 1.25em;
   color: inherit;
   background-color: inherit;
-}
-
-.btn--green {
-  border: 0;
-  height: 40px;
-  width: 25%;
-  font-size: 1em;
-  font-weight: 400;
-  color: rgb(170, 255, 170);
-  background-color: rgba(28, 139, 28, 0.7);
-}
-
-.btn--red {
-  border: 0;
-  height: 40px;
-  width: 25%;
-  font-size: 1em;
-  font-weight: 400;
-  color: rgb(255, 176, 176);
-  background-color: rgba(255, 0, 0, 0.7);
-}
-
-.dark--text {
-}
-
-.test {
-  margin-top: auto;
 }
 
 .current {
@@ -304,30 +348,16 @@ textarea {
 }
 
 .slide {
-    height: 30px;
-    background-color: inherit;
+  height: 30px;
+  background-color: inherit;
 }
 
 .slide-text {
-    font-family: 'Open Sans';
-    font-weight: 400;
-    font-size: 1em;
-    color: white;
+  font-family: "Open Sans";
+  font-weight: 400;
+  font-size: 1em;
+  color: white;
 }
-/* input::-webkit-slider-runnable-track {
-  padding: 0;
-  border: 0;
-  background-color: white;
-}
-
-input::-moz-range-track {
-  padding: 0;
-  border: 0;
-}
-input::-ms-track {
-  padding: 0;
-  border: 0;
-} */
 
 .tab {
   width: 50%;
@@ -348,4 +378,10 @@ input::-ms-track {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
+}
+
+.small-icon {
+  height: 32px;
+  width: 32px;
+  margin-left: 5px;
 }

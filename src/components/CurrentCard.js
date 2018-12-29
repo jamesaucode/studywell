@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import checked from '../image/checked.png';
+import cross from '../image/cross.png';
 
 export default class CurrentCard extends Component {
   state = {
     show: false,
-    answered: false,
+    correct: [],
     testing: this.props.testing,
     // For normal mode
     lTabClicked: !this.props.testing,
@@ -26,26 +28,44 @@ export default class CurrentCard extends Component {
     }
   };
   handleTestModeClickSetTrue = e => {
+    this.props.onTestModeClickTrue();
     this.setState({
-      testing: true
+      testing: this.props.testing,
+      lTabClicked: this.props.testing
     });
   };
   handleTestModeClickSetFalse = e => {
+    this.props.onTestModeClickFalse();
     this.setState({
-      testing: false
+      testing: this.props.testing,
+      rTabClicked: this.props.testing
     });
   };
   handleCorrectClick = e => {
     alert('Correct!')
+    const correct = this.state.correct
+    correct[this.props.qnum] = true
+    this.setState({
+      correct
+    })
     this.props.onCorrectAnswerClick(e);
     this.props.onNextQuestionClick(e);
   }
   handleWrongClick = e => {
     alert('Wrong!')
+    const correct = this.state.correct
+    correct[this.props.qnum] = false
+    this.setState({
+      correct
+    })
   }
-  // componentDidMount = () => {
-  //   document.addEventListener("keydown", this.handleKeyDown, false);
-  // };
+  componentDidMount = e => {
+    const initializeCorrect = new Array(this.props.length)
+    this.setState(
+    {
+      correct: initializeCorrect
+    })
+  }
   render() {
     const {
       question,
@@ -55,7 +75,8 @@ export default class CurrentCard extends Component {
       onTestModeClickFalse,
       onTestModeClickTrue
     } = this.props;
-    const { testing } = this.state;
+    const { testing } = this.props;
+    const { correct } = this.state;
     const { handleTestModeClickSetFalse, handleTestModeClickSetTrue } = this;
     var leftBtn = "";
     var rightBtn = "";
@@ -86,6 +107,8 @@ export default class CurrentCard extends Component {
           <div className={style.question}>
             <h3 className="big-title">
               {qnum + 1}. {question}
+              { (correct[qnum]) && <img className="small-icon" src={checked}></img>}
+              { (correct[qnum] === false) && <img className="small-icon" src={cross}></img>}
             </h3>
             {this.state.show ? (
               <button
@@ -105,10 +128,9 @@ export default class CurrentCard extends Component {
           </div>
           <div className={style.answer}>
             {this.state.show && <span>{answer}</span>}
-            {/* {!this.state.show && <div className="placeholder--200px"></div>} */}
-            {testing && (
+            {(testing && this.state.show) && (
               <div className="test">
-                <h2 className="text--dark">Did you get this right?</h2>
+              <h2 className="text--dark">Did you get this right?</h2>
                 <div className="btn-wrapper">
                   <button onClick={this.handleCorrectClick} className="btn--green">Yay</button>
                   <button onClick={this.handleWrongClick} className="btn--red">Nay</button>

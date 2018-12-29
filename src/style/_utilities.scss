@@ -1,0 +1,33 @@
+$tiny-gutter: 10px;
+$small-gutter: 20px;
+$medium-gutter: 40px;
+$big-gutter: 80px;
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans";
+  }
+
+.tiny-gutter-right {
+    margin-right: $tiny-gutter;
+}
+
+.small-gutter-right {
+    margin-right: $small-gutter;
+}
+
+.max-width {
+    width: 100%;
+}
+
+.margin-right-auto {
+    margin-right: auto;
+}
+
+.sixteen-px {
+    height: 16px;
+    width: 16px;
+}

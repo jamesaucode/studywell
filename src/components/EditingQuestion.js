@@ -41,6 +41,7 @@ export default class EditingQuestion extends Component {
     this.setState({
       focused: true
     });
+    e.target.select();
   };
   handleEditClick = () => {
     this.props.onEditSubmit(this.state.card);

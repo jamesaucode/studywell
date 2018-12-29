@@ -20,7 +20,7 @@ export default class QuestionList extends Component {
       <div className="cards">
         {this.state.editing ? (
           <div>
-            <button onClick={this.onEditClick} className="btn--dark btn--long">
+            <button onClick={this.onEditClick} className="btn--dark max-width">
               Finish Editing
             </button>
             {cardsInOrder.map(({ question, answer, i, id }) => {
@@ -37,7 +37,7 @@ export default class QuestionList extends Component {
           </div>
         ) : (
           <div>
-            <button onClick={this.onEditClick} className="btn--dark btn--long">
+            <button onClick={this.onEditClick} className="btn--dark max-width">
               Edit
             </button>
             {cardsInOrder
