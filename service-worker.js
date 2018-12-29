@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/studywell/precache-manifest.ddfe716588f0b58ccf1b62abf3dd8eca.js"
+  "/studywell/precache-manifest.761e74ec120bdbcca5cd9e4056d58561.js"
 );
 
 workbox.clientsClaim();
