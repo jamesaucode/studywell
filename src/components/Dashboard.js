@@ -40,13 +40,16 @@ export default class Dashboard extends Component {
     dim: false,
     testing: false,
     success: false,
+    message: '',
     correct: 0,
     qnum: 0
   };
   handleShuffleClick = () => {
     this.onShuffleClick();
     this.setState({
-      qnum: 0
+      qnum: 0,
+      success: true,
+      message: 'Shuffled the questions!'
     });
   };
   onShuffleClick = () => {
@@ -122,7 +125,8 @@ export default class Dashboard extends Component {
     };
     this.setState(prevState => ({
       cards: prevState.cards.concat(newCard),
-      success: true
+      success: true,
+      message: "Question successfully added!"
     }));
     this.onCancelClick();
   };
@@ -284,16 +288,10 @@ export default class Dashboard extends Component {
         <div className="hotkeys">
             <h2>HOTKEYS!</h2>
         </div>}
-        {/* Show success message when user answered all answer correctly */}
-        {correct === this.state.cards.length &&
-        <SuccessMessage
-        message="You answered all the questions correctly! Congratulations!"
-        onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
-        />}
         {/* Show success message for new card  */}
         {this.state.success && 
         <SuccessMessage 
-        message="A new card is added!"
+        message={this.state.message}
         onCloseSuccessMessageClick={this.onCloseSuccessMessageClick} 
         />}
         {newCard && (
@@ -301,6 +299,7 @@ export default class Dashboard extends Component {
             style={style.card}
             onSubmit={this.onSubmit}
             onCancelClick={this.onCancelClick}
+            onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
           />
         )}
         {collapse && (
@@ -322,6 +321,7 @@ export default class Dashboard extends Component {
               onTestModeClickTrue={this.onTestModeClickTrue}
               onCorrectAnswerClick={this.onCorrectAnswerClick}
               onNextQuestionClick={this.onNextQuestionClick}
+              onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
             />
             <div className="btns">
               <Button
