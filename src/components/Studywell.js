@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import Card from "./Card";
 import uuid from "uuid";
-import axios from "axios";
+import { switchMode } from "../helpers/darkmode";
 import Button from "./Button";
 import Slide from "./Slide";
 import EditableNewCard from "./EditableNewCard";
@@ -9,47 +8,42 @@ import CurrentCard from "./CurrentCard";
 import QuestionList from "./QuestionList";
 import SuccessMessage from "./SuccessMessage";
 
-export default class Dashboard extends Component {
+export default class StudyWell extends Component {
   state = {
+    // Dummy data for testing
     cards: [
       {
-        question: "Your mom",
-        answer: "Fat",
+        question: "Test question 1",
+        answer: "Answer 1",
         i: 1,
         id: uuid()
       },
       {
-        question: "My mom",
-        answer: "Not fat",
+        question: "Test question 2",
+        answer: "Answer 2",
         i: 2,
-        id: uuid()
-      },
-      {
-        question: "Kappa",
-        answer: "Poggers",
-        i: 3,
         id: uuid()
       }
     ],
+    session: "5d65eb0e-6433-4d01-a381-c946a355e0cd",
     darkMode: true,
     leftBtnClicked: false,
     rightBtnClicked: false,
-    collapse: false,
+    showAllQuestions: false,
     playing: false,
-    newCard: false,
-    dim: false,
-    testing: false,
+    creatingNewCard: false,
+    testingMode: false,
     success: false,
-    message: '',
+    message: "",
     correct: 0,
-    qnum: 0
+    currentQuestionNumber: 0
   };
   handleShuffleClick = () => {
     this.onShuffleClick();
     this.setState({
-      qnum: 0,
+      currentQuestionNumber: 0,
       success: true,
-      message: 'Shuffled the questions!'
+      message: "Shuffled the questions!"
     });
   };
   onShuffleClick = () => {
@@ -62,20 +56,20 @@ export default class Dashboard extends Component {
       cards[j] = x;
     }
   };
-  onCollapseClick = e => {
+  onshowAllQuestionsClick = e => {
     this.setState(prevState => ({
-      collapse: !prevState.collapse
+      showAllQuestions: !prevState.showAllQuestions
     }));
   };
   onLastQuestionClick = e => {
-    const qnum = this.state.qnum;
-    if (qnum <= 0) {
+    const currentQuestionNumber = this.state.currentQuestionNumber;
+    if (currentQuestionNumber <= 0) {
       this.setState({
-        qnum: this.state.cards.length - 1
+        currentQuestionNumber: this.state.cards.length - 1
       });
     } else {
       this.setState(prevState => ({
-        qnum: prevState.qnum - 1
+        currentQuestionNumber: prevState.currentQuestionNumber - 1
       }));
     }
     this.setState({
@@ -85,7 +79,8 @@ export default class Dashboard extends Component {
   };
   onNextQuestionClick = e => {
     this.setState(prevState => ({
-      qnum: (prevState.qnum + 1) % this.state.cards.length,
+      currentQuestionNumber:
+        (prevState.currentQuestionNumber + 1) % this.state.cards.length,
       rightBtnClicked: true,
       leftBtnClicked: false
     }));
@@ -96,6 +91,19 @@ export default class Dashboard extends Component {
     }));
   };
   onEditSubmit = ({ question, answer, id }) => {
+    // fetch("http://127.0.0.1:5000/" + this.state.session, {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     question,
+    //     answer,
+    //     id,
+    //     session: this.state.session
+    //   })
+    // });
     this.setState({
       cards: this.state.cards.map(card => {
         if (id === card.id) {
@@ -112,27 +120,50 @@ export default class Dashboard extends Component {
   };
   onAddQuestionClick = e => {
     this.setState({
-      newCard: true
+      creatingNewCard: true
     });
   };
 
   onSubmit = (question, answer, id) => {
-    const newCard = {
+    const NewCard = {
       question,
       answer,
       id,
       i: this.state.cards.length + 1
     };
+    var newCards = this.state.cards.concat(NewCard);
     this.setState(prevState => ({
-      cards: prevState.cards.concat(newCard),
+      cards: newCards,
       success: true,
       message: "Question successfully added!"
     }));
+    // fetch("http://127.0.0.1:5000/" + this.state.session, {
+    //   method: "POST",
+    //   headers: {
+    //     Accept: "application/json",
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     question,
+    //     answer,
+    //     id,
+    //     session: this.state.session
+    //   })
+    // });
+    // var api = "http://127.0.0.1:5000/" + this.state.session;
+    // fetch(api)
+    //   .then(res => res.json())
+    //   .then(json =>
+    //     this.setState({
+    //       // Default setting the state to first list of the database
+    //       cards: json
+    //     })
+    //   );
     this.onCancelClick();
   };
   onCancelClick = e => {
     this.setState({
-      newCard: false
+      creatingNewCard: false
     });
   };
   onStartClick = e => {
@@ -140,50 +171,36 @@ export default class Dashboard extends Component {
       playing: !prevState.playing
     }));
   };
+  // Hotkeys
   handleKeyDown = e => {
     if (this.state.playing) {
+      const rightArrow = 39;
+      const leftArrow = 37;
       switch (e.keyCode) {
-        case 39:
+        case rightArrow:
           this.onNextQuestionClick(e);
           break;
-        case 37:
+        case leftArrow:
           this.onLastQuestionClick(e);
           break;
         default:
           break;
       }
     }
-    if (this.state.dim) {
-      if (e.keyCode === 27) {
-        this.onDimClick(e);
-      }
-    }
-  };
-  onDimClickOff = e => {
-    if (this.state.dim === true) {
-      this.setState({
-        dim: false
-      });
-    }
   };
   onCloseSuccessMessageClick = e => {
     this.setState({
-      success:false
-    })
-  }
-  onDimClick = e => {
-    this.setState(prevState => ({
-      dim: !prevState.dim
-    }));
+      success: false
+    });
   };
   onTestModeClickTrue = e => {
     this.setState({
-      testing: true
+      testingMode: true
     });
   };
   onTestModeClickFalse = e => {
     this.setState({
-      testing: false
+      testingMode: false
     });
   };
   onCorrectAnswerClick = e => {
@@ -191,110 +208,77 @@ export default class Dashboard extends Component {
       correct: prevState.correct + 1
     }));
   };
-  async testSubmit(e) {
-    e.preventDefault();
-    await axios
-      .post("http://localhost:8081/", {
-        question: e.target.value,
-        answer: "sajdkhask"
-      })
-      .catch(error => console.log(error));
-  }
+
+  componentDidUpdate = (prevProps, prevState) => {};
+
   componentDidMount = () => {
     console.log("Mounted!");
+    var api = "http://127.0.0.1:5000/" + this.state.session;
+    console.log(api);
+    fetch(api)
+      .then(res => res.json())
+      .then(json =>
+        this.setState({
+          cards: json
+        })
+      );
+    console.log("Your session no. is " + this.state.session);
   };
 
   render() {
     const cardsInOrder = this.state.cards;
     const {
-      collapse,
-      qnum,
+      showAllQuestions,
+      currentQuestionNumber,
       darkMode,
       playing,
-      newCard,
+      creatingNewCard,
       correct,
-      testing
+      testingMode
     } = this.state;
-    var darkModeString = "dark-mode";
-    var style = {};
-    if (!darkMode) {
-      darkModeString = "light-mode";
-      style = {
-        btnL: "btn--light--last",
-        btnN: "btn--light--next",
-        btn: "btn--light",
-        cards: "cards--dark",
-        card: {
-          div: "card--light",
-          question: "question--light",
-          answer: "answer--light"
-        }
-      };
-    } else {
-      darkModeString = "dark-mode";
-      style = {
-        btnL: "btn--dark--next",
-        btnN: "btn--dark--last",
-        btn: "btn--dark",
-        cards: "cards--dark",
-        card: {
-          div: "card--dark",
-          question: "question--dark",
-          answer: "answer--dark"
-        }
-      };
-    }
+    const style = switchMode(darkMode); // style changes as this.state.darkMode changes value
     return (
       <div
         tabIndex="0"
-        onKeyDown={this.onDimClickOff}
-        className={darkModeString}
+        // onKeyDown={this.onDimClickOff}
+        className={darkMode ? "dark-mode" : "light-mode"}
       >
-        {this.state.dim && <div className="dimmer" />}
+        {/* {this.state.dim && <div className="dimmer" />} */}
         <div>
           <button className={style.btn} onClick={this.onModeClick}>
             Light mode / Dark mode
           </button>
-          {collapse ? (
-            <button className={style.btn} onClick={this.onCollapseClick}>
+          {showAllQuestions ? (
+            <button
+              className={style.btn}
+              onClick={this.onshowAllQuestionsClick}
+            >
               Hide all questions
             </button>
           ) : (
-            <button className={style.btn} onClick={this.onCollapseClick}>
+            <button
+              className={style.btn}
+              onClick={this.onshowAllQuestionsClick}
+            >
               Show all questions
             </button>
           )}
-          {playing ? (
-            <button className={style.btn} onClick={this.onStartClick}>
-              Stop
-            </button>
-          ) : (
-            <button className={style.btn} onClick={this.onStartClick}>
-              Start
-            </button>
-          )}
-
           <button className={style.btn} onClick={this.handleShuffleClick}>
             Shuffle
           </button>
           <button onClick={this.onAddQuestionClick} className={style.btn}>
             Add Question
           </button>
-          <button className={style.btn} onClick={this.onDimClick}>
-            Show hotkey
-          </button>
         </div>
-        {this.state.dim && 
-        <div className="hotkeys">
-            <h2>HOTKEYS!</h2>
-        </div>}
+
         {/* Show success message for new card  */}
-        {this.state.success && 
-        <SuccessMessage 
-        message={this.state.message}
-        onCloseSuccessMessageClick={this.onCloseSuccessMessageClick} 
-        />}
-        {newCard && (
+        {this.state.success && (
+          <SuccessMessage
+            message={this.state.message}
+            onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
+          />
+        )}
+        {creatingNewCard && (
           <EditableNewCard
             style={style.card}
             onSubmit={this.onSubmit}
@@ -302,20 +286,33 @@ export default class Dashboard extends Component {
             onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
           />
         )}
-        {collapse && (
+        {showAllQuestions && (
           <QuestionList
             cardsInOrder={cardsInOrder}
             onEditSubmit={this.onEditSubmit}
           />
         )}
-        {playing && (
-          <div className="margin-auto-center"tabIndex="0" onKeyDown={this.handleKeyDown}>
+
+        {playing ? (
+          <div
+            className="margin-auto-center"
+            tabIndex="0"
+            onKeyDown={this.handleKeyDown}
+          >
+            {/* Needs to fix this. Stop button not position correctly */}
+            <button
+              className={style.btn + " btn--start"}
+              onClick={this.onStartClick}
+            >
+              Take a break
+            </button>
+            :
             <CurrentCard
-              question={this.state.cards[qnum].question}
-              answer={this.state.cards[qnum].answer}
+              question={this.state.cards[currentQuestionNumber].question}
+              answer={this.state.cards[currentQuestionNumber].answer}
               style={style.card}
-              qnum={qnum}
-              testing={this.state.testing}
+              currentQuestionNumber={currentQuestionNumber}
+              testingMode={this.state.testingMode}
               length={this.state.cards.length}
               onTestModeClickFalse={this.onTestModeClickFalse}
               onTestModeClickTrue={this.onTestModeClickTrue}
@@ -337,12 +334,25 @@ export default class Dashboard extends Component {
                 clicked={this.state.rightBtnClicked}
               />
             </div>
+            {playing && testingMode && (
+              <Slide correct={correct} length={this.state.cards.length} />
+            )}
           </div>
-        )}
-        {playing && testing && (
-          <Slide correct={correct} length={this.state.cards.length} />
+        ) : (
+          <button
+            className={style.btn + " btn--start"}
+            onClick={this.onStartClick}
+          >
+            Start Studying
+          </button>
         )}
       </div>
     );
   }
 }
+
+// (
+//   <button className={style.btn} onClick={this.onStartClick}>
+//     Take a break
+//   </button>
+// ) :

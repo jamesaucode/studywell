@@ -1,3 +1,21 @@
+$card-width: 500px;
+$background--darkMode: #303030;
+$card-background--darkMode: rgba(84, 16, 110, 1);
+$background--lightMode: rgb(230, 230, 230);
+$icon-height: 32px;
+$icon-width: 32px;
+$btn--darkMode: rgb(66, 38, 66);
+$text--darkMode: rgb(236, 188, 255);
+$text--lightMode: rgba(255, 255, 255, 0.75);
+$card-width: 500px;
+$default-font-size: 1.25em;
+@mixin boxShadow() {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+}
+@mixin margin-auto-middle() {
+  margin: 0 auto;
+}
+
 input {
   padding: 0;
   border: 0;
@@ -16,12 +34,6 @@ textarea {
   width: 90%;
 }
 
-:root {
-  --card-width: 500px;
-}
-
-$card-width: 500px;
-
 // Not sure what this is for ??
 .answer-input {
   height: 100px;
@@ -35,173 +47,32 @@ $card-width: 500px;
 
 .dark-mode {
   min-height: 100vh;
-  background-color: #303030;
+  background-color: $background--darkMode;
 }
 .light-mode {
   min-height: 100vh;
-  background-color: rgb(255, 255, 255);
-}
-
-// buttons for dark mode
-
-.btn--dark {
-  background-color: rgb(66, 38, 66);
-  color: rgb(236, 188, 255);
-  padding: 0.5em;
-  border: none;
-
-  &--last {
-    background-color: rgb(32, 62, 160);
-    color: rgb(236, 188, 255);
-    padding: 0.5em;
-    border: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-
-  }
-  &--next {
-    background-color: rgb(28, 55, 146);
-    color: rgb(236, 188, 255);
-    padding: 0.5em;
-    border: none;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &:hover {
-    background-color: rgb(88, 51, 88);
-    cursor: pointer;
-  }
-}
-
-// buttons for light mode
-
-.btn--light {
-  background-color: rgb(161, 161, 161);
-  padding: 0.5em;
-  color: black;
-  border: none;
-
-  &--last {
-    background-color: rgb(161, 161, 161);
-    padding: 0.5em;
-    color: black;
-    border: none;
-  }
-
-  &--next {
-    background-color: rgb(161, 161, 161);
-    padding: 0.5em;
-    color: black;
-    border: none;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-// Other button stylings
-
-.btn {
-  &--colorless {
-    background-color: white;
-    color: black;
-    padding: 0.5em;
-    border: none;
-  }
-
-  &--big {
-    font-size: 1.25em;
-    font-weight: 400;
-    width: 50%;
-  }
-
-  // Place button on top right of a position relative element
-  &--top-right {
-    position: absolute;
-    background-color: transparent;
-    padding: 0;
-    border: none;
-    top: -15px;
-    right: -15px;
-  }
-
-  // green button for Yes button in testing mode
-  &--green {
-    border: 0;
-    height: 40px;
-    width: 25%;
-    font-size: 1em;
-    font-weight: 400;
-    color: rgb(170, 255, 170);
-    background-color: rgba(28, 139, 28, 0.7);
-  }
-  // red button for No button in testing mode
-  &--red {
-    border: 0;
-    height: 40px;
-    width: 25%;
-    font-size: 1em;
-    font-weight: 400;
-    color: rgb(255, 176, 176);
-    background-color: rgba(255, 0, 0, 0.7);
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-.testing {
-  background-color: transparent;
-  height: 32px;
-  width: 32px;
+  background-color: $background--lightMode;
 }
 
 .no-background-color {
-  background-color: rgb(84, 16, 110);
+  background-color: $text--lightMode;
 }
 
-// The button wrapper for the Next and Previous button under CurrentCard
-.btns {
+@mixin flexAndAlign() {
   display: flex;
-  flex-grow: 1;
-  width: 100%;
-  max-width: $card-width;
-  margin: 0 auto;
-}
-
-.btn-wrapper {
-  display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 0 auto;
 }
 
 .cards {
-  display: flex;
   color: white;
   background-color: rgba(80, 97, 250, 0.5);
   width: fit-content;
   flex-direction: column;
-  align-items: center;
   text-align: center;
   flex-wrap: wrap;
-  justify-content: center;
   margin: 2em auto;
-}
-
-.dimmer {
-  height: 100%;
-  width: 100%;
-  opacity: 0.5;
-  background: #000000;
-  position: fixed;
-  z-index: 100;
+  @include flexAndAlign();
 }
 
 .success {
@@ -223,7 +94,7 @@ $card-width: 500px;
 }
 
 .small-title {
-  width: 500px;
+  width: $card-width;
   margin: 0.5em 0;
   color: white;
 }
@@ -243,7 +114,10 @@ $card-width: 500px;
 }
 
 .margin-auto-center {
-  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   outline: none;
   /* max-width: fit-content; */
 }
@@ -254,13 +128,12 @@ $card-width: 500px;
   justify-content: center;
 }
 
-
 .card {
   &--dark {
     background-color: white;
     width: 150px;
     margin: 0 1em;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+    @include boxShadow();
   }
 
   &--light {
@@ -268,7 +141,7 @@ $card-width: 500px;
     color: white;
     width: 150px;
     margin: 0 1em;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+    @include boxShadow();
   }
 }
 
@@ -277,12 +150,12 @@ $card-width: 500px;
   width: 100%;
   max-width: $card-width;
   height: fit-content;
-  margin: 0 auto;
+  @include margin-auto-middle();
 }
 
 .big-title {
   font-weight: 500;
-  font-size: 1.25em;
+  font-size: $default-font-size;
   color: inherit;
   background-color: inherit;
 }
@@ -291,7 +164,7 @@ $card-width: 500px;
   background-color: white;
   width: 150px;
   margin: 0 1em;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
+  @include boxShadow();
 }
 
 .question--dark {
@@ -300,9 +173,9 @@ $card-width: 500px;
   align-items: center;
   height: 100%;
   padding: 0.5em;
-  font-size: 1.25em;
-  color: rgb(236, 188, 255);
-  background-color: rgb(84, 16, 110);
+  font-size: $default-font-size;
+  color: $text--darkMode;
+  background-color: $card-background--darkMode;
 }
 
 .placeholder--200px {
@@ -314,11 +187,11 @@ $card-width: 500px;
   min-height: 200px;
   width: 100%;
   padding: 0.5em;
-  font-size: 1.25em;
+  font-size: $default-font-size;
   line-height: 1.75em;
   font-weight: 400;
   color: rgb(220, 136, 253);
-  background-color: rgba(84, 16, 110, 1);
+  background-color: $card-background--darkMode;
 }
 
 .question--light {
@@ -327,24 +200,22 @@ $card-width: 500px;
   align-items: center;
   padding: 0.5em;
   height: 100%;
-  font-size: 1.25em;
-  color: rgb(84, 16, 110);
-  background-color: rgb(236, 188, 255);
+  font-size: $default-font-size;
+  color: $text--lightMode;
 }
 
 .answer--light {
   min-height: 200px;
   padding: 0.5em;
   height: 100%;
-  font-size: 1.25em;
+  font-size: $default-font-size;
   font-weight: 400;
-  color: rgb(84, 16, 110);
-  background-color: rgb(236, 188, 255);
+  color: $text--lightMode;
 }
 
 .slide-wrapper {
-  width: fit-content;
-  margin: 0 auto;
+  // width: fit-content;
+  @include margin-auto-middle();
 }
 
 .slide {
@@ -369,19 +240,26 @@ $card-width: 500px;
   border: 0;
 }
 
+.text {
+  &--dark {
+    font-size: $default-font-size;
+  }
+}
+
 .clicked {
   background-color: rgb(182, 182, 182);
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .wrapper {
+  min-width: $card-width;
   width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
+  max-width: $card-width;
+  @include margin-auto-middle();
 }
 
 .small-icon {
-  height: 32px;
-  width: 32px;
+  height: $icon-height;
+  width: $icon-width;
   margin-left: 5px;
 }

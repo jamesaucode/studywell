@@ -6,7 +6,7 @@ export default class QuestionList extends Component {
   state = {
     cardsInOrder: this.props.cardsInOrder,
     editing: false,
-    input:''
+    input: ""
   };
   onEditClick = e => {
     this.setState(prevState => ({
@@ -14,7 +14,6 @@ export default class QuestionList extends Component {
     }));
   };
   render() {
-    console.log(this.state.input);
     const cardsInOrder = this.props.cardsInOrder;
     return (
       <div className="cards">
@@ -25,12 +24,12 @@ export default class QuestionList extends Component {
             </button>
             {cardsInOrder.map(({ question, answer, i, id }) => {
               return (
-                <EditingQuestion 
-                question={question} 
-                answer={answer} 
-                i={i} 
-                id={id}
-                onEditSubmit={this.props.onEditSubmit}
+                <EditingQuestion
+                  question={question}
+                  answer={answer}
+                  i={i}
+                  id={id}
+                  onEditSubmit={this.props.onEditSubmit}
                 />
               );
             })}

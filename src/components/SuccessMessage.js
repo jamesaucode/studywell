@@ -9,6 +9,7 @@ export default class SuccessMessage extends Component {
         <h1 className="success-message">{message}</h1>
         <img 
         src={multiply} 
+        alt="button for closing the message"
         onClick={this.props.onCloseSuccessMessageClick} 
         className="sixteen-px">
         </img>

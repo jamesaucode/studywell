@@ -49,7 +49,7 @@ export default class EditingQuestion extends Component {
   };
 
   render() {
-    const { question, answer, i } = this.state.card;
+    const { question, answer } = this.state.card;
     return (
       <div className="small-title">
         <div className="small-title">

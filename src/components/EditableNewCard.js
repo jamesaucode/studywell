@@ -65,7 +65,7 @@ export default class EditableNewCard extends Component {
             Add
           </button>
           <button className="btn--top-right" onClick={onCancelClick}>
-            <img className="testing" src={cancel}></img>
+            <img  alt="cancel button" className="testing" src={cancel}></img>
           </button>
         </div>
         <input

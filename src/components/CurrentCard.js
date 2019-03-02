@@ -1,26 +1,26 @@
 import React, { Component } from "react";
-import checked from '../image/checked.png';
-import cross from '../image/cross.png';
+import checked from "../image/checked.png";
+import cross from "../image/cross.png";
 
 export default class CurrentCard extends Component {
   state = {
-    show: false,
+    showAnswer: false,
     correct: [],
-    testing: this.props.testing,
+    testingMode: this.props.testingMode,
     // For normal mode
-    lTabClicked: !this.props.testing,
-    // For testing mode
-    rTabClicked: this.props.testing
+    studyModeTab: !this.props.testingMode,
+    // For testingMode mode
+    testingModeTab: this.props.testingMode
   };
   onShowClick = e => {
     this.setState(prevState => ({
-      show: !prevState.show
+      showAnswer: !prevState.showAnswer
     }));
   };
   handleKeyDown = e => {
+    const spaceKey = 32;
     switch (e.keyCode) {
-      case 32:
-        console.log("Show answer!");
+      case spaceKey:
         this.onShowClick(e);
         break;
       default:
@@ -30,62 +30,52 @@ export default class CurrentCard extends Component {
   handleTestModeClickSetTrue = e => {
     this.props.onTestModeClickTrue();
     this.setState({
-      testing: this.props.testing,
-      lTabClicked: this.props.testing
+      testingMode: this.props.testingMode,
+      studyModeTab: this.props.testingMode
     });
   };
   handleTestModeClickSetFalse = e => {
     this.props.onTestModeClickFalse();
     this.setState({
-      testing: this.props.testing,
-      rTabClicked: this.props.testing
+      testingMode: this.props.testingMode,
+      testingModeTab: this.props.testingMode
     });
   };
   handleCorrectClick = e => {
-    alert('Correct!')
-    const correct = this.state.correct
-    correct[this.props.qnum] = true
+    const correct = this.state.correct;
+    correct[this.props.currentQuestionNumber] = true;
     this.setState({
       correct
-    })
+    });
     this.props.onCorrectAnswerClick(e);
     this.props.onNextQuestionClick(e);
-  }
+  };
   handleWrongClick = e => {
-    alert('Wrong!')
-    const correct = this.state.correct
-    correct[this.props.qnum] = false
+    const correct = this.state.correct;
+    correct[this.props.currentQuestionNumber] = false;
     this.setState({
       correct
-    })
-  }
+    });
+  };
   componentDidMount = e => {
-    const initializeCorrect = new Array(this.props.length)
-    this.setState(
-    {
+    const initializeCorrect = new Array(this.props.length);
+    this.setState({
       correct: initializeCorrect
-    })
-  }
+    });
+  };
   render() {
-    const {
-      question,
-      answer,
-      style,
-      qnum,
-      onTestModeClickFalse,
-      onTestModeClickTrue
-    } = this.props;
-    const { testing } = this.props;
+    const { question, answer, style, currentQuestionNumber } = this.props;
+    const { testingMode } = this.props;
     const { correct } = this.state;
     const { handleTestModeClickSetFalse, handleTestModeClickSetTrue } = this;
     var leftBtn = "";
     var rightBtn = "";
-    if (!testing) {
+    if (!testingMode) {
       leftBtn = "tab clicked";
     } else {
       leftBtn = "tab";
     }
-    if (testing) {
+    if (testingMode) {
       rightBtn = "tab clicked";
     } else {
       rightBtn = "tab";
@@ -94,10 +84,10 @@ export default class CurrentCard extends Component {
     return (
       <div className="wrapper">
         <button onClick={handleTestModeClickSetFalse} className={leftBtn}>
-          Study mode
+          Study Mode
         </button>
         <button onClick={handleTestModeClickSetTrue} className={rightBtn}>
-          Testing mode
+          Testing Mode
         </button>
         <div
           className={style.div + " big-card"}
@@ -106,34 +96,45 @@ export default class CurrentCard extends Component {
         >
           <div className={style.question}>
             <h3 className="big-title">
-              {qnum + 1}. {question}
-              { (correct[qnum]) && <img className="small-icon" src={checked}></img>}
-              { (correct[qnum] === false) && <img className="small-icon" src={cross}></img>}
+              {currentQuestionNumber + 1}. {question}
+              {correct[currentQuestionNumber] && (
+                <img className="small-icon" alt="checked icon" src={checked} />
+              )}
+              {correct[currentQuestionNumber] === false && (
+                <img className="small-icon" alt="crossed icon" src={cross} />
+              )}
             </h3>
-            {this.state.show ? (
+            {this.state.showAnswer ? (
               <button
                 className="btn--dark btn--right"
                 onClick={this.onShowClick}
               >
-                Hide
+                Hide Answer
               </button>
             ) : (
               <button
                 className="btn--dark btn--right"
                 onClick={this.onShowClick}
               >
-                Show
+                Show Answer
               </button>
             )}
           </div>
           <div className={style.answer}>
-            {this.state.show && <span>{answer}</span>}
-            {(testing && this.state.show) && (
+            {this.state.showAnswer && <span>{answer}</span>}
+            {testingMode && this.state.showAnswer && (
               <div className="test">
-              <h2 className="text--dark">Did you get this right?</h2>
+                <h2 className="text--dark">Did you get this right?</h2>
                 <div className="btn-wrapper">
-                  <button onClick={this.handleCorrectClick} className="btn--green">Yay</button>
-                  <button onClick={this.handleWrongClick} className="btn--red">Nay</button>
+                  <button
+                    onClick={this.handleCorrectClick}
+                    className="btn--green"
+                  >
+                    Yay
+                  </button>
+                  <button onClick={this.handleWrongClick} className="btn--red">
+                    Nay
+                  </button>
                 </div>
               </div>
             )}

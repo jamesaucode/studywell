@@ -5,11 +5,13 @@
   "homepage": "https://jamesaucode.github.io/studywell",
   "dependencies": {
     "axios": "^0.18.0",
+    "express": "^4.16.4",
     "gh-pages": "^2.0.1",
+    "mongoose": "^5.4.2",
     "node-sass": "^4.11.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-scripts": "2.1.2",
+    "react-scripts": "^2.1.3",
     "uuid": "^3.3.2"
   },
   "scripts": {

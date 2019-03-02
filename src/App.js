@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
-import Dashboard from './components/Dashboard'
-import './style/reset.css';
-import './style/_utilities.scss';
-import './style/App.scss';
+import React, { Component } from "react";
+import Studywell from "./components/Studywell";
+import "./style/Main.scss";
 
 class App extends Component {
   render() {
     return (
       <div>
-      <Dashboard />
+        <Studywell />
       </div>
     );
   }
