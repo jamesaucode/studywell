@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import uuid from "uuid";
-import { switchMode } from "../helpers/darkmode";
 import Button from "./Button";
 import Slide from "./Slide";
 import EditableNewCard from "./EditableNewCard";
 import CurrentCard from "./CurrentCard";
 import QuestionList from "./QuestionList";
 import SuccessMessage from "./SuccessMessage";
+import LoginForm from "./LoginForm";
+import { logout, switchMode, shuffleCards } from "../helpers/helper";
+
+const RIGHTARROW = 39;
+const LEFTARROW = 37;
 
 export default class StudyWell extends Component {
   state = {
@@ -15,17 +19,16 @@ export default class StudyWell extends Component {
       {
         question: "Test question 1",
         answer: "Answer 1",
-        i: 1,
+        // i: 1,
         id: uuid()
       },
       {
         question: "Test question 2",
         answer: "Answer 2",
-        i: 2,
+        // i: 2,
         id: uuid()
       }
     ],
-    session: "5d65eb0e-6433-4d01-a381-c946a355e0cd",
     darkMode: true,
     leftBtnClicked: false,
     rightBtnClicked: false,
@@ -33,29 +36,26 @@ export default class StudyWell extends Component {
     playing: false,
     creatingNewCard: false,
     testingMode: false,
-    success: false,
     message: "",
     correct: 0,
     currentQuestionNumber: 0
   };
-  handleShuffleClick = () => {
-    this.onShuffleClick();
+
+  resetCurrentQuestionNumber = () => {
     this.setState({
-      currentQuestionNumber: 0,
-      success: true,
-      message: "Shuffled the questions!"
+      currentQuestionNumber: 0
     });
   };
-  onShuffleClick = () => {
-    var cards = this.state.cards;
-    var j, x, i;
-    for (i = cards.length - 1; i > 0; i--) {
-      j = Math.floor(Math.random() * (i + 1));
-      x = cards[i];
-      cards[i] = cards[j];
-      cards[j] = x;
-    }
+
+  handleShuffleClick = () => {
+    this.onShuffleClick();
+    this.resetCurrentQuestionNumber();
   };
+
+  onShuffleClick = () => {
+    shuffleCards(this.state.cards);
+  };
+
   onshowAllQuestionsClick = e => {
     this.setState(prevState => ({
       showAllQuestions: !prevState.showAllQuestions
@@ -91,19 +91,6 @@ export default class StudyWell extends Component {
     }));
   };
   onEditSubmit = ({ question, answer, id }) => {
-    // fetch("http://127.0.0.1:5000/" + this.state.session, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     question,
-    //     answer,
-    //     id,
-    //     session: this.state.session
-    //   })
-    // });
     this.setState({
       cards: this.state.cards.map(card => {
         if (id === card.id) {
@@ -118,6 +105,12 @@ export default class StudyWell extends Component {
       })
     });
   };
+
+  onLoginClick = e => {
+    this.setState({
+      logged: true
+    });
+  };
   onAddQuestionClick = e => {
     this.setState({
       creatingNewCard: true
@@ -125,40 +118,15 @@ export default class StudyWell extends Component {
   };
 
   onSubmit = (question, answer, id) => {
-    const NewCard = {
+    const newCard = {
       question,
       answer,
-      id,
-      i: this.state.cards.length + 1
+      id
     };
-    var newCards = this.state.cards.concat(NewCard);
+    // var newCards = this.state.cards.concat(NewCard);
     this.setState(prevState => ({
-      cards: newCards,
-      success: true,
-      message: "Question successfully added!"
+      cards: prevState.cards.concat(newCard)
     }));
-    // fetch("http://127.0.0.1:5000/" + this.state.session, {
-    //   method: "POST",
-    //   headers: {
-    //     Accept: "application/json",
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-    //     question,
-    //     answer,
-    //     id,
-    //     session: this.state.session
-    //   })
-    // });
-    // var api = "http://127.0.0.1:5000/" + this.state.session;
-    // fetch(api)
-    //   .then(res => res.json())
-    //   .then(json =>
-    //     this.setState({
-    //       // Default setting the state to first list of the database
-    //       cards: json
-    //     })
-    //   );
     this.onCancelClick();
   };
   onCancelClick = e => {
@@ -174,24 +142,17 @@ export default class StudyWell extends Component {
   // Hotkeys
   handleKeyDown = e => {
     if (this.state.playing) {
-      const rightArrow = 39;
-      const leftArrow = 37;
       switch (e.keyCode) {
-        case rightArrow:
+        case RIGHTARROW:
           this.onNextQuestionClick(e);
           break;
-        case leftArrow:
+        case LEFTARROW:
           this.onLastQuestionClick(e);
           break;
         default:
           break;
       }
     }
-  };
-  onCloseSuccessMessageClick = e => {
-    this.setState({
-      success: false
-    });
   };
   onTestModeClickTrue = e => {
     this.setState({
@@ -209,20 +170,60 @@ export default class StudyWell extends Component {
     }));
   };
 
+  getUserData = () => {
+    fetch("/check", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      Vary: "Cookie"
+    }).then(res => {
+      if (res.status === 200) {
+        this.setState({
+          logged: true
+        });
+        this.getCards();
+      } else {
+        this.setState({
+          logged: false
+        });
+      }
+    });
+  };
+
+  getCards = () => {
+    fetch("/cards", {
+      method: "GET",
+      vary: "cookie"
+    })
+      .then(res => res.json())
+      .then(json =>
+        json.map(card => {
+          var newCard = {
+            question: card.question,
+            answer: card.answer,
+            id: uuid()
+          };
+          this.setState({
+            cards: this.state.cards.concat(newCard)
+          });
+        })
+      );
+  };
+
+  handleLogoutClick = e => {
+    logout();
+    setTimeout(() => {
+      this.getUserData();
+    }, 1000);
+  };
+
   componentDidUpdate = (prevProps, prevState) => {};
 
   componentDidMount = () => {
-    console.log("Mounted!");
-    var api = "http://127.0.0.1:5000/" + this.state.session;
-    console.log(api);
-    fetch(api)
-      .then(res => res.json())
-      .then(json =>
-        this.setState({
-          cards: json
-        })
-      );
-    console.log("Your session no. is " + this.state.session);
+    console.log("mounted");
+    this.getUserData();
   };
 
   render() {
@@ -234,16 +235,13 @@ export default class StudyWell extends Component {
       playing,
       creatingNewCard,
       correct,
-      testingMode
+      testingMode,
+      logged
     } = this.state;
     const style = switchMode(darkMode); // style changes as this.state.darkMode changes value
     return (
-      <div
-        tabIndex="0"
-        // onKeyDown={this.onDimClickOff}
-        className={darkMode ? "dark-mode" : "light-mode"}
-      >
-        {/* {this.state.dim && <div className="dimmer" />} */}
+      <div tabIndex="0" className={darkMode ? "dark-mode" : "light-mode"}>
+        <SuccessMessage show={true} message={"SUCCESS"} />
         <div>
           <button className={style.btn} onClick={this.onModeClick}>
             Light mode / Dark mode
@@ -269,21 +267,23 @@ export default class StudyWell extends Component {
           <button onClick={this.onAddQuestionClick} className={style.btn}>
             Add Question
           </button>
+          {logged && (
+            <button onClick={this.handleLogoutClick} className={style.btn}>
+              Logout
+            </button>
+          )}
         </div>
 
-        {/* Show success message for new card  */}
-        {this.state.success && (
-          <SuccessMessage
-            message={this.state.message}
-            onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
-          />
-        )}
+        <LoginForm
+          getUserData={this.getUserData}
+          onLoginClick={this.onLoginClick}
+        />
+
         {creatingNewCard && (
           <EditableNewCard
             style={style.card}
             onSubmit={this.onSubmit}
             onCancelClick={this.onCancelClick}
-            onCloseSuccessMessageClick={this.onCloseSuccessMessageClick}
           />
         )}
         {showAllQuestions && (
@@ -350,9 +350,3 @@ export default class StudyWell extends Component {
     );
   }
 }
-
-// (
-//   <button className={style.btn} onClick={this.onStartClick}>
-//     Take a break
-//   </button>
-// ) :

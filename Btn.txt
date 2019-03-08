@@ -1,0 +1,170 @@
+$btn--darkMode: rgb(66, 38, 66);
+$text--darkMode: rgb(236, 188, 255);
+$card-width: 500px;
+@mixin position-absolute-middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+// The button wrapper for the Next and Previous button under CurrentCard
+.btns {
+  display: flex;
+  flex-grow: 1;
+  width: 100%;
+  max-width: $card-width;
+  margin: 0 auto;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 2em auto;
+}
+
+// buttons for dark mode
+
+.btn--dark {
+  background-color: $btn--darkMode;
+  color: $text--darkMode;
+  padding: 0.5em;
+  border: none;
+
+  &--last {
+    background-color: rgb(32, 62, 160);
+    color: $text--darkMode;
+    padding: 0.5em;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &--next {
+    background-color: rgb(28, 55, 146);
+    color: $text--darkMode;
+    padding: 0.5em;
+    border: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    background-color: rgb(88, 51, 88);
+    cursor: pointer;
+  }
+}
+
+// buttons for light mode
+
+.btn--light {
+  background-color: rgb(161, 161, 161);
+  padding: 0.5em;
+  color: black;
+  border: none;
+
+  &--last {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
+  }
+
+  &--next {
+    background-color: rgb(161, 161, 161);
+    padding: 0.5em;
+    color: black;
+    border: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+// Other button stylings
+
+@keyframes changeColor {
+  0% {
+    background: rgb(153, 1, 255);
+  }
+  25% {
+    background: rgb(162, 27, 252);
+  }
+  50% {
+    background: rgb(172, 53, 252);
+  }
+  75% {
+    background: rgb(162, 27, 252);
+  }
+  100% {
+    background: rgb(153, 1, 255);
+  }
+}
+
+.btn {
+  // Styling for the start button
+  // It should be in the center of the screen
+  &--start {
+    @include position-absolute-middle();
+    top: 20%;
+    padding: 1em 2em;
+    animation: changeColor 3s infinite;
+    animation-timing-function: ease-out;
+  }
+  &--colorless {
+    background-color: white;
+    color: black;
+    padding: 0.5em;
+    border: none;
+  }
+
+  &--big {
+    font-size: 1.25em;
+    font-weight: 400;
+    width: 50%;
+  }
+
+  // Place button on top right of a position relative element
+  &--top-right {
+    position: absolute;
+    background-color: transparent;
+    padding: 0;
+    border: none;
+    top: -15px;
+    right: -15px;
+  }
+
+  // green button for Yes button in testing mode
+  &--green {
+    border: 0;
+    height: 40px;
+    width: 25%;
+    font-size: 1em;
+    font-weight: 400;
+    color: rgb(170, 255, 170);
+    background-color: rgba(28, 139, 28, 0.7);
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  // red button for No button in testing mode
+  &--red {
+    border: 0;
+    height: 40px;
+    width: 25%;
+    font-size: 1em;
+    font-weight: 400;
+    color: rgb(255, 176, 176);
+    background-color: rgba(255, 0, 0, 0.7);
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+}

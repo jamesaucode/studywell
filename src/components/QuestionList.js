@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Question from "./Question";
 import EditingQuestion from "./EditingQuestion";
+import PropTypes from "prop-types";
 
 export default class QuestionList extends Component {
   state = {
@@ -22,12 +23,11 @@ export default class QuestionList extends Component {
             <button onClick={this.onEditClick} className="btn--dark max-width">
               Finish Editing
             </button>
-            {cardsInOrder.map(({ question, answer, i, id }) => {
+            {cardsInOrder.map(({ question, answer, id }) => {
               return (
                 <EditingQuestion
                   question={question}
                   answer={answer}
-                  i={i}
                   id={id}
                   onEditSubmit={this.props.onEditSubmit}
                 />
@@ -40,9 +40,9 @@ export default class QuestionList extends Component {
               Edit
             </button>
             {cardsInOrder
-              .sort((a, b) => a.i > b.i)
-              .map(({ question, answer, i }) => {
-                return <Question question={question} answer={answer} i={i} />;
+              .sort((a, b) => cardsInOrder.indexOf(a) > cardsInOrder.indexOf(b))
+              .map(({ question, answer }) => {
+                return <Question question={question} answer={answer} />;
               })}
           </div>
         )}
@@ -50,3 +50,7 @@ export default class QuestionList extends Component {
     );
   }
 }
+
+QuestionList.propTypes = {
+  cardsInOrder: PropTypes.array
+};

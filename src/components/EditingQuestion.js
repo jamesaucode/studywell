@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class EditingQuestion extends Component {
   state = {
@@ -73,3 +74,9 @@ export default class EditingQuestion extends Component {
     );
   }
 }
+
+EditingQuestion.propTypes = {
+  question: PropTypes.string,
+  answer: PropTypes.string,
+  id: PropTypes.string
+};

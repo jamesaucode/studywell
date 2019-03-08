@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import checked from "../image/checked.png";
 import cross from "../image/cross.png";
+
+const SPACEKEY = 32;
 
 export default class CurrentCard extends Component {
   state = {
@@ -18,9 +21,8 @@ export default class CurrentCard extends Component {
     }));
   };
   handleKeyDown = e => {
-    const spaceKey = 32;
     switch (e.keyCode) {
-      case spaceKey:
+      case SPACEKEY:
         this.onShowClick(e);
         break;
       default:
@@ -64,12 +66,17 @@ export default class CurrentCard extends Component {
     });
   };
   render() {
-    const { question, answer, style, currentQuestionNumber } = this.props;
-    const { testingMode } = this.props;
+    const {
+      question,
+      answer,
+      style,
+      currentQuestionNumber,
+      testingMode
+    } = this.props;
     const { correct } = this.state;
     const { handleTestModeClickSetFalse, handleTestModeClickSetTrue } = this;
-    var leftBtn = "";
-    var rightBtn = "";
+    let leftBtn = "";
+    let rightBtn = "";
     if (!testingMode) {
       leftBtn = "tab clicked";
     } else {
@@ -144,3 +151,11 @@ export default class CurrentCard extends Component {
     );
   }
 }
+
+CurrentCard.propTypes = {
+  question: PropTypes.string,
+  answer: PropTypes.string,
+  style: PropTypes.object,
+  currentQuestionNumber: PropTypes.number,
+  testingMode: PropTypes.bool
+};

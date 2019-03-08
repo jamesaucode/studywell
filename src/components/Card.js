@@ -1,32 +1,43 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export default class Card extends Component {
-    state = {
-        show: false
-    }
-    onShowClick = (e) => {
-        this.setState(prevState => ({
-            show: !prevState.show
-        }))
-    }
+  state = {
+    show: false
+  };
+  onShowClick = e => {
+    this.setState(prevState => ({
+      show: !prevState.show
+    }));
+  };
   render() {
-    const {question, answer, style} = this.props
+    const { question, answer, style } = this.props;
     return (
-    //   <div className="card">
-    <div>
-        {this.state.show ?
-        <div className={style.div}>
+      //   <div className="card">
+      <div>
+        {this.state.show ? (
+          <div className={style.div}>
             <h3 className={style.text}>{question}</h3>
             <h3 className={style.text}>{answer}</h3>
-            <button className="btn--dark btn--long" onClick={this.onShowClick}>Show</button>
-        </div>
-        :
-        <div className={style.div}>
+            <button className="btn--dark btn--long" onClick={this.onShowClick}>
+              Show
+            </button>
+          </div>
+        ) : (
+          <div className={style.div}>
             <h3 className={style.text}>{question}</h3>
-            <button className="btn--dark btn--long" onClick={this.onShowClick}>Show</button>
-        </div>
-        }
-    </div>
-    )
+            <button className="btn--dark btn--long" onClick={this.onShowClick}>
+              Show
+            </button>
+          </div>
+        )}
+      </div>
+    );
   }
 }
+
+Card.propTypes = {
+  question: PropTypes.string,
+  answer: PropTypes.string,
+  style: PropTypes.object
+};
