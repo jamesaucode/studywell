@@ -1,0 +1,26 @@
+// Margin sizes
+$tiny-gutter: 10px;
+$small-gutter: 20px;
+$medium-gutter: 40px;
+$big-gutter: 80px;
+
+// Font-stack
+$font-stack: "Open Sans", "Segoe UI", Tahoma, sans-serif;
+$default-font-size: 1.25em;
+$btn-font-size: 0.9em;
+
+//Colors
+$background--darkMode: #303030;
+$black: rgb(0, 0, 0);
+$black--75: rgba(0, 0, 0, 0.75);
+$black--50: rbba(0, 0, 0, 0.5);
+$card-background--darkMode: rgba(84, 16, 110, 1);
+$background--lightMode: rgb(230, 230, 230);
+$btn--darkMode: rgb(66, 38, 66);
+$text--darkMode: rgb(236, 188, 255);
+$text--lightMode: rgba(255, 255, 255, 0.75);
+
+//Misc
+$card-width: 500px;
+$icon-height: 32px;
+$icon-width: 32px;

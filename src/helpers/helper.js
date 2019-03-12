@@ -20,6 +20,12 @@ const shuffleCards = cards => {
   return cards;
 };
 
+const isUserLoggedIn = () => {
+  return fetch("/check").then(res => {
+    return res;
+  });
+};
+
 const switchMode = StateDarkMode => {
   if (StateDarkMode) {
     const style = {
@@ -51,4 +57,4 @@ const switchMode = StateDarkMode => {
   }
 };
 
-export { logout, switchMode, shuffleCards };
+export { logout, switchMode, shuffleCards, isUserLoggedIn };

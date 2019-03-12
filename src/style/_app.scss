@@ -114,6 +114,19 @@ textarea {
   margin: 1em auto;
 }
 
+.link {
+  display: inline;
+  font-size: 1em;
+  border: none;
+  padding: 0;
+  background: transparent;
+  color: blue;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .login-form {
   position: fixed;
   border-radius: 5px;
@@ -138,9 +151,15 @@ textarea {
       border: 1px solid rgba(black, 0.5);
     }
   }
+  & > div > p {
+    color: white;
+    font-weight: 400;
+    font-size: $default-font-size;
+  }
 
-  & > button {
+  .btn {
     border: none;
+    width: 100%;
     height: 48px;
 
     &:hover {

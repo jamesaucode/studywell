@@ -1,66 +1,30 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component, MouseEvent } from "react";
 import checked from "../image/checked.png";
 import cross from "../image/cross.png";
 
 const SPACEKEY = 32;
+const initialState = {
+  showAnswer: false,
+  correct: []
+};
+type State = { showAnswer: boolean; correct: boolean[] };
+type Props = {
+  question: string;
+  answer: string;
+  currentQuestionNumber: number;
+  style: object;
+  testingMode: boolean;
+  onTestModeClickTrue(e: MouseEvent): void;
+  onTestModeClickFalse(e: MouseEvent): void;
+  onCorrectAnswerClick(e: MouseEvent): void;
+  onNextQuestionClick(e: MouseEvent): void;
+  length: number;
+};
 
-export default class CurrentCard extends Component {
-  state = {
-    showAnswer: false,
-    correct: [],
-    testingMode: this.props.testingMode,
-    // For normal mode
-    studyModeTab: !this.props.testingMode,
-    // For testingMode mode
-    testingModeTab: this.props.testingMode
-  };
-  onShowClick = e => {
-    this.setState(prevState => ({
-      showAnswer: !prevState.showAnswer
-    }));
-  };
-  handleKeyDown = e => {
-    switch (e.keyCode) {
-      case SPACEKEY:
-        this.onShowClick(e);
-        break;
-      default:
-        break;
-    }
-  };
-  handleTestModeClickSetTrue = e => {
-    this.props.onTestModeClickTrue();
-    this.setState({
-      testingMode: this.props.testingMode,
-      studyModeTab: this.props.testingMode
-    });
-  };
-  handleTestModeClickSetFalse = e => {
-    this.props.onTestModeClickFalse();
-    this.setState({
-      testingMode: this.props.testingMode,
-      testingModeTab: this.props.testingMode
-    });
-  };
-  handleCorrectClick = e => {
-    const correct = this.state.correct;
-    correct[this.props.currentQuestionNumber] = true;
-    this.setState({
-      correct
-    });
-    this.props.onCorrectAnswerClick(e);
-    this.props.onNextQuestionClick(e);
-  };
-  handleWrongClick = e => {
-    const correct = this.state.correct;
-    correct[this.props.currentQuestionNumber] = false;
-    this.setState({
-      correct
-    });
-  };
-  componentDidMount = e => {
-    const initializeCorrect = new Array(this.props.length);
+export default class CurrentCard extends Component<Props, State> {
+  readonly state: State = initialState;
+  componentDidMount = () => {
+    const initializeCorrect: boolean[] = [];
     this.setState({
       correct: initializeCorrect
     });
@@ -97,11 +61,10 @@ export default class CurrentCard extends Component {
           Testing Mode
         </button>
         <div
-          className={style.div + " big-card"}
-          tabIndex="0"
+          className={style["div"] + " big-card"}
           onKeyDown={this.handleKeyDown}
         >
-          <div className={style.question}>
+          <div className={style["question"]}>
             <h3 className="big-title">
               {currentQuestionNumber + 1}. {question}
               {correct[currentQuestionNumber] && (
@@ -127,7 +90,7 @@ export default class CurrentCard extends Component {
               </button>
             )}
           </div>
-          <div className={style.answer}>
+          <div className={style["answer"]}>
             {this.state.showAnswer && <span>{answer}</span>}
             {testingMode && this.state.showAnswer && (
               <div className="test">
@@ -150,12 +113,40 @@ export default class CurrentCard extends Component {
       </div>
     );
   }
+  private onShowClick = e => {
+    this.setState(prevState => ({
+      showAnswer: !prevState.showAnswer
+    }));
+  };
+  private handleKeyDown = e => {
+    switch (e.keyCode) {
+      case SPACEKEY:
+        this.onShowClick(e);
+        break;
+      default:
+        break;
+    }
+  };
+  private handleTestModeClickSetTrue = e => {
+    this.props.onTestModeClickTrue(e);
+  };
+  private handleTestModeClickSetFalse = e => {
+    this.props.onTestModeClickFalse(e);
+  };
+  private handleCorrectClick = e => {
+    const correct = this.state.correct;
+    correct[this.props.currentQuestionNumber] = true;
+    this.setState({
+      correct
+    });
+    this.props.onCorrectAnswerClick(e);
+    this.props.onNextQuestionClick(e);
+  };
+  private handleWrongClick = e => {
+    const correct = this.state.correct;
+    correct[this.props.currentQuestionNumber] = false;
+    this.setState({
+      correct
+    });
+  };
 }
-
-CurrentCard.propTypes = {
-  question: PropTypes.string,
-  answer: PropTypes.string,
-  style: PropTypes.object,
-  currentQuestionNumber: PropTypes.number,
-  testingMode: PropTypes.bool
-};

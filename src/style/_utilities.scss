@@ -1,14 +1,15 @@
-$tiny-gutter: 10px;
-$small-gutter: 20px;
-$medium-gutter: 40px;
-$big-gutter: 80px;
-$font-stack: "Open Sans", "Segoe UI", Tahoma, sans-serif;
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: $font-stack;
+}
+
+a {
+  text-decoration: none;
+  &:visited {
+    color: inherit;
+  }
 }
 
 .tiny-gutter-right {
