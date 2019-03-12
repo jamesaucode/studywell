@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { logout } from "../helpers/helper.js";
+import { logout } from "../helpers/helper";
 import avatar from "../image/avatar.png";
 
 const initialState = { showDropDown: false };
@@ -14,7 +14,7 @@ type Props = {
 export default class Navigation extends Component<Props, State> {
   readonly state: State = initialState;
   handleLogoutClick = e => {
-    logout();
+    logout(e);
     setTimeout(() => {
       this.props.refreshLoginStatus();
     }, 1000);
@@ -80,16 +80,12 @@ export default class Navigation extends Component<Props, State> {
                     showDropDown ? "dropdown-content--show" : "dropdown-content"
                   }
                 >
-                  {/* <div className="option"> */}
                   <a className="option" href="/profile">
                     Profile
                   </a>
-                  {/* </div> */}
-                  {/* <div className="option"> */}
                   <a className="option" href="/settings">
                     Settings
                   </a>
-                  {/* </div> */}
                   <div
                     onClick={e => this.handleLogoutClick(e)}
                     className="option"
