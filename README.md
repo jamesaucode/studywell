@@ -2,9 +2,9 @@
 
 This is a web-app built in Reactjs. It is a popular study tool for students known as Flash cards in the form of a web app.
 
-##Users can register an account, and have their flashcards stored in it. They will also be able to share their set of cards to other users.
+## Users can register an account, and have their flashcards stored in it. They will also be able to share their set of cards to other users.
 
-##Users can also create groups, so it will easier for people in the same class to connect and collaborate together.
+## Users can also create groups, so it will easier for people in the same class to connect and collaborate together.
 
 ### To be implemented
 
