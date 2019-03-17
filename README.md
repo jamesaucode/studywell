@@ -1,6 +1,8 @@
-### Welcome to the project studywell!
+# Welcome to the project studywell!
 
 This is a web-app built in Reactjs. It is a popular study tool for students known as Flash cards in the form of a web app.
+
+Key features:
 
 ## Users can register an account, and have their flashcards stored in it. They will also be able to share their set of cards to other users.
 
@@ -12,8 +14,8 @@ Collaboration feature will be added soon! You will be able to join groups and wo
 
 ### Hotkeys:
 
-→ : Next question
-
-← : Previous question
-
-Space: Show / Hide current question
+| Hotkeys |   Function    |
+| ------- | :-----------: |
+| <-      | Last question |
+| ->      | Next question |
+| Space   |  Show answer  |
