@@ -1,5 +1,7 @@
 import React, { MouseEvent, SFC } from "react";
 
+"use strict";
+
 type Props = {
   name: string;
   style: object;
@@ -21,5 +23,4 @@ const Button: SFC<Props> = ({ name, style, clicked, onClick }) => {
     );
   }
 };
-
 export default Button;

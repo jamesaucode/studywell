@@ -1,3 +1,4 @@
+// @format
 $card-width: 500px;
 $background--darkMode: #303030;
 $card-background--darkMode: rgba(84, 16, 110, 1);
@@ -7,7 +8,6 @@ $icon-width: 32px;
 $btn--darkMode: rgb(66, 38, 66);
 $text--darkMode: rgb(236, 188, 255);
 $text--lightMode: rgba(255, 255, 255, 0.75);
-$card-width: 500px;
 $default-font-size: 1.25em;
 @mixin boxShadow() {
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15);
@@ -15,23 +15,71 @@ $default-font-size: 1.25em;
 @mixin margin-auto-middle() {
   margin: 0 auto;
 }
-
 input {
-  padding: 0;
-  border: 0;
-  background-color: rgb(201, 201, 201);
-  color: black;
+  border: none;
 }
+/** Profile Page **/
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin: 0 auto;
+  max-width: 688px;
+  font-weight: 400;
+  color: white;
 
-textarea {
-  padding: 0.5em;
-  border: 0;
-  background-color: rgb(201, 201, 201);
-  font-style: normal;
-  color: black;
-  resize: none;
-  height: 150px;
-  width: 90%;
+  &--username {
+    font-size: 2em;
+    font-weight: 400;
+    margin: 10px 0;
+  }
+
+  &--email {
+    color: rgb(21, 165, 255);
+    font-size: 1em;
+    font-weight: 500;
+  }
+
+  &--avatar {
+    float: right;
+    border-radius: 50%;
+    height: 200px;
+  }
+
+  &--label {
+    color: $white--75;
+  }
+
+  &--input {
+    color: white;
+    width: 60%;
+    padding: 7px;
+    background: $background--darkMode;
+    border-radius: 3px;
+    border: 1px solid $white--75;
+
+    &:focus {
+      border: 1px solid $white--25;
+    }
+  }
+
+  .border-bottom {
+    border-bottom: 1px solid $white--25;
+  }
+  /** End of Profile Page **/
+
+  &--btn {
+    border: 0;
+    border-radius: 5px;
+    padding: 10px;
+    font-weight: 700;
+    color: white;
+    background: purple;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 // Not sure what this is for ??
@@ -48,6 +96,7 @@ textarea {
 .dark-mode {
   min-height: 100vh;
   background-color: $background--darkMode;
+  color: white;
 }
 .light-mode {
   min-height: 100vh;
@@ -75,34 +124,108 @@ textarea {
   @include flexAndAlign();
 }
 
-.success {
+@keyframes slowAppear {
+  0% {
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.message {
+  animation: 5s ease-out 0s 1 slowAppear;
   display: flex;
+  flex-direction: column;
+  padding: 5px 30px;
+  margin: 0 auto 10px auto;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
+  box-shadow: 2px 2px 4px $white--25;
   font-weight: 400;
-  border-radius: 5px;
-  width: 95%;
+  border-radius: 3px;
+  width: 600px;
   text-align: center;
-  color: rgb(1, 167, 15);
-  background-color: rgb(164, 244, 66);
-  height: 50px;
+  height: 60px;
+  transition: all 1s ease-out;
 
+  &-success {
+    background-color: rgba(14, 165, 3, 0.75);
+  }
+  &-fail {
+    background-color: rgba(249, 47, 47, 0.75);
+  }
+  &-heading {
+    font-size: 1em;
+    font-weight: 700;
+    color: white--75;
+    text-align: left;
+    padding: 5px;
+  }
   &-message {
     font-size: 1em;
     font-weight: 400;
+    color: white--75;
+    text-align: left;
+    padding: 5px;
   }
 }
 
 .small-title {
-  width: $card-width;
+  display: flex;
+  align-items: center;
   margin: 0.5em 0;
+  padding: 5px;
+  min-width: 300px;
+  width: 50%;
   color: white;
+  height: 200px;
+  & > div {
+    height: 100%;
+  }
+  & > div > input {
+    padding: 5px;
+    border: 0;
+    border-bottom: 2px solid grey;
+    background-color: inherit;
+    width: 90%;
+    //height: 50%;
+    color: $white--75;
+  }
+
+  & > div > textarea {
+    padding: 5px;
+    border: 0;
+    background-color: inherit;
+    font-size: 16px;
+    font-style: normal;
+    resize: none;
+    max-height: 60px;
+    width: 90%;
+    border-bottom: 2px solid grey;
+    color: $white--75;
+  }
+}
+.wrapper--question-list {
+  margin: 0 auto;
+  width: 800px;
+  background-color: inherit;
+  z-index: 100;
+}
+.question-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
 }
 
 .tiny-title {
   font-weight: 500;
-  margin-bottom: 0.5em;
   font-size: 1.75em;
 }
 
@@ -111,7 +234,6 @@ textarea {
   font-weight: 400;
   line-height: 1.5em;
   width: 80%;
-  margin: 1em auto;
 }
 
 .link {
@@ -211,6 +333,8 @@ textarea {
 
 .big-title {
   font-weight: 500;
+  width: 80%;
+  word-wrap: break-word;
   font-size: $default-font-size;
   color: inherit;
   background-color: inherit;
@@ -242,6 +366,7 @@ textarea {
 .answer--dark {
   min-height: 200px;
   width: 100%;
+  word-wrap: break-word;
   padding: 0.5em;
   font-size: $default-font-size;
   line-height: 1.75em;
@@ -280,7 +405,7 @@ textarea {
 }
 
 .slide-text {
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
   font-weight: 400;
   font-size: 1em;
   color: white;
@@ -308,6 +433,7 @@ textarea {
 }
 
 .wrapper {
+  outline: none;
   min-width: $card-width;
   width: 100%;
   max-width: $card-width;

@@ -2,6 +2,8 @@ import React, { Component, MouseEvent } from "react";
 import uuid from "uuid";
 import cancel from "../image/cross.png";
 
+"use strict";
+
 const initialState = {
   editing: true,
   focused: false,
@@ -13,7 +15,7 @@ type State = Readonly<typeof initialState>;
 type Props = {
   style: object;
   onSubmit(questionInput: string, answerInput: string, uuid: string): void;
-  onCancelClick(e: MouseEvent): void;
+    onCancelClick: (event : MouseEvent) => void;
 };
 
 export default class EditableNewCard extends Component<Props, State> {
@@ -21,8 +23,8 @@ export default class EditableNewCard extends Component<Props, State> {
   componentDidMount = () => {
     console.log("Editable new card mounted");
 
-    // this.questionInput.focus();
-    // this.questionInput.select();
+      //this.questionInput.focus();
+      //this.questionInput.select();
   };
 
   render() {

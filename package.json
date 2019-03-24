@@ -11,15 +11,16 @@
     "@types/react-dom": "^16.8.2",
     "@types/react-router-dom": "^4.3.1",
     "axios": "^0.18.0",
-    "express": "^4.16.4",
+    "chai": "^4.2.0",
+    "cypress": "^3.1.5",
     "gh-pages": "^2.0.1",
-    "mongoose": "^5.4.2",
     "node-sass": "^4.11.0",
-    "prop-types": "^15.7.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.8",
+    "react-test-renderer": "^16.8.4",
+    "sinon": "^7.2.7",
     "typescript": "^3.3.3333",
     "uuid": "^3.3.2"
   },
@@ -29,15 +30,23 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "cypress": "cypress open"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "cy": true
+    }
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.0"
+  }
 }

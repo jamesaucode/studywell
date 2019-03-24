@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import SuccessMessage from "./SuccessMessage";
 import { Redirect } from "react-router-dom";
 
+"use strict";
+
 const initialState = {
   username: "",
   password: "",
@@ -41,7 +43,7 @@ export default class LoginForm extends Component<object, State> {
     }
     return (
       <div className="login-form">
-        <SuccessMessage show={successMessage} message={message} />
+          {/*<SuccessMessage show={successMessage} message={message} /> */}
         <input
           onChange={this.onUserNameChange}
           name="user_name"

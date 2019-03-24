@@ -27,9 +27,11 @@ $card-width: 500px;
 .btn--dark {
   background-color: $background--darkMode;
   color: $text--darkMode;
-  font-size: $btn-font-size;
+  height: fit-content;
+  min-height: 33px;
+  font-size: 16px;
   font-weight: 700;
-  padding: 0.5em;
+  padding: 5px;
   border: none;
 
   &--last {
@@ -110,8 +112,10 @@ $card-width: 500px;
   // Styling for the start button
   // It should be in the center of the screen
   &--start {
-    @include position-absolute-middle();
-    top: 20%;
+    //@include position-absolute-middle();
+    //top: 20%;
+    margin: auto;
+    display: block;
     padding: 1em 2em;
     animation: changeColor 3s infinite;
     animation-timing-function: ease-out;

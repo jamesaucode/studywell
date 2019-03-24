@@ -34,6 +34,7 @@ const switchMode = (StateDarkMode: boolean) => {
         btnL: "btn--dark--next",
         btnN: "btn--dark--last",
         btn: "btn--dark",
+        link: "link link--dark",
         cards: "cards--dark",
         card: {
           div: "card--dark",
@@ -46,6 +47,7 @@ const switchMode = (StateDarkMode: boolean) => {
         btnN: "btn--light--next",
         btn: "btn--light",
         cards: "cards--dark",
+        link: "link link--light",
         card: {
           div: "card--light",
           question: "question--light",

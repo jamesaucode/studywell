@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+"use strict";
+
 const initialState = { show: false };
 type State = Readonly<typeof initialState>;
 type Props = { question: string; answer: string; style: object };

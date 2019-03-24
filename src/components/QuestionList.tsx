@@ -1,13 +1,14 @@
-import React, { Component } from "react";
+import React, { Component,MouseEvent } from "react";
 import Question from "./Question";
 import EditingQuestion from "./EditingQuestion";
 
+'use strict'
+
 const initialState = {
-  // cardsInOrder: this.props.cardsInOrder,
   editing: false,
   input: ""
 };
-type Props = { cardsInOrder: any[]; onEditSubmit: Function };
+type Props = { cardsInOrder: any[]; onEditSubmit: Function; onShowQuestionListClick: (event : MouseEvent)=> void; onDeleteItem: (event : MouseEvent)=> void;};
 type State = Readonly<typeof initialState>;
 
 export default class QuestionList extends Component<Props, State> {
@@ -18,39 +19,42 @@ export default class QuestionList extends Component<Props, State> {
     }));
   };
   render() {
-    const cardsInOrder = this.props.cardsInOrder;
+    const { onEditSubmit, cardsInOrder , onShowQuestionListClick, onDeleteItem} = this.props;
     return (
-      <div className="cards">
-        {this.state.editing ? (
-          <div>
-            <button onClick={this.onEditClick} className="btn--dark max-width">
+      <div className="wrapper--question-list">
+        {true && (
+          <div className="question-list">
+            <button onClick={onShowQuestionListClick} className="btn--dark max-width">
               Finish Editing
             </button>
-            {cardsInOrder.map(({ question, answer, id }) => {
+            {cardsInOrder.map(({ question, answer, uuid }) => {
               return (
                 <EditingQuestion
                   question={question}
                   answer={answer}
-                  id={id}
+                  uuid={uuid}
                   onEditSubmit={this.props.onEditSubmit}
+                  onDeleteItem={onDeleteItem}
                 />
               );
             })}
           </div>
-        ) : (
-          <div>
-            <button onClick={this.onEditClick} className="btn--dark max-width">
-              Edit
-            </button>
-            {cardsInOrder
-              .sort((a, b) => {
-                return cardsInOrder.indexOf(a) - cardsInOrder.indexOf(b);
-              })
-              .map(({ question, answer }) => {
-                return <Question question={question} answer={answer} />;
-              })}
-          </div>
-        )}
+          ) 
+            //        : (
+            // <d//        iv>
+            //        <button onClick={this.onEditClick} className="btn--dark max-width">
+            //            Edit
+            //        </button>
+            //        {cardsInOrder
+            //          .sort((a, b) => {
+            //            return cardsInOrder.indexOf(a) - cardsInOrder.indexOf(b);
+            //          })
+            //          .map(({ question, answer }) => {
+            //            return <Question question={question} answer={answer} />;
+            //          })}
+            //  <///        div>
+            // )}
+            }
       </div>
     );
   }

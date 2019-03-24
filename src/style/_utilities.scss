@@ -7,9 +7,30 @@
 
 a {
   text-decoration: none;
-  &:visited {
-    color: inherit;
-  }
+  // &:visited {
+  //   // color: inherit;
+  // }
+}
+
+.flex {
+  display: flex;
+}
+
+.small-gutter-top-bottom {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.wrapper--left-float {
+  float: left;
 }
 
 .tiny-gutter-right {

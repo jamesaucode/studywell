@@ -2,6 +2,8 @@ import React, { Component, MouseEvent } from "react";
 import checked from "../image/checked.png";
 import cross from "../image/cross.png";
 
+"use strict";
+
 const SPACEKEY = 32;
 const initialState = {
   showAnswer: false,
@@ -53,7 +55,7 @@ export default class CurrentCard extends Component<Props, State> {
     }
 
     return (
-      <div className="wrapper">
+      <div className="wrapper" onKeyDown={this.handleKeyDown} tabIndex={0}>
         <button onClick={handleTestModeClickSetFalse} className={leftBtn}>
           Study Mode
         </button>
@@ -114,6 +116,7 @@ export default class CurrentCard extends Component<Props, State> {
     );
   }
   private onShowClick = e => {
+      console.log('ShowClick');
     this.setState(prevState => ({
       showAnswer: !prevState.showAnswer
     }));

@@ -1,5 +1,7 @@
 import React, { SFC } from "react";
 
+"use strict";
+
 type Props = { question: string; answer: string };
 
 const Question: SFC<Props> = ({ question, answer }) => {

@@ -9,6 +9,33 @@
   border-bottom: 1px solid rgb(80, 80, 80);
 }
 
+.logo {
+  padding: 10px;
+  font-weight: 800;
+  font-size: 1.5em;
+  background-color: white;
+  color: $background--darkMode;
+}
+
+.link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-weight: 600;
+  background: inherit;
+  padding-bottom: 3px;
+  margin: 0 10px;
+  text-transform: uppercase;
+  transition: 0.5s ease-out;
+
+  &--dark {
+    color: white;
+  }
+}
+
+.active-link {
+  border-bottom: 3px solid white;
+}
+
 .navbar {
   max-width: 1000px;
   margin-left: auto;
